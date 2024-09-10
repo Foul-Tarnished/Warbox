@@ -20,9 +20,9 @@ internal partial class CfgSerializerContext : JsonSerializerContext
 
 public class CFG
 {
-    public const string FolderName = "Geobox";
-    public const string Config_FileName = "Geobox_Config.json";
-    public const string Keybinds_FileName = "Geobox_Keybinds.json";
+    public const string FolderName = "Warbox";
+    public const string Config_FileName = "Warbox_Config.json";
+    public const string Keybinds_FileName = "Warbox_Keybinds.json";
 
     public const int MAX_RECENT_PROJECTS = 20;
     public static bool IsEnabled = true;

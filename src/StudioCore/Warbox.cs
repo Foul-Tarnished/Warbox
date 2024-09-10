@@ -221,8 +221,8 @@ public class Warbox
 
     private void CheckProgramUpdate()
     {
-        Octokit.GitHubClient gitHubClient = new(new Octokit.ProductHeaderValue("Smithbox"));
-        Octokit.Release release = gitHubClient.Repository.Release.GetLatest("vawser", "Smithbox").Result;
+        Octokit.GitHubClient gitHubClient = new(new Octokit.ProductHeaderValue("Warbox"));
+        Octokit.Release release = gitHubClient.Repository.Release.GetLatest("vawser", "Warbox").Result;
         var isVer = false;
         var verstring = "";
         foreach (var c in release.TagName)
@@ -415,7 +415,7 @@ public class Warbox
             catch (Exception e)
             {
                 PlatformUtils.Instance.MessageBox($"Unable to save config during crash recovery.\n" +
-                                                  $"If you continue to crash on startup, delete config in AppData\\Local\\Smithbox\n\n" +
+                                                  $"If you continue to crash on startup, delete config in AppData\\Local\\Warbox\n\n" +
                                                   $"{e.Message} {e.StackTrace}",
                     "Error",
                     MessageBoxButtons.OK,

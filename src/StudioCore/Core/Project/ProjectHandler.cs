@@ -95,12 +95,12 @@ public class ProjectHandler
         Warbox.ProjectType = CurrentProject.Config.GameType;
         Warbox.GameRoot = CurrentProject.Config.GameRoot;
         Warbox.ProjectRoot = Path.GetDirectoryName(path);
-        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.geobox";
+        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.warbox";
 
         if (Warbox.ProjectRoot == "")
-            TaskLogs.AddLog("Geobox.ProjectRoot is empty!");
+            TaskLogs.AddLog("Warbox ProjectRoot is empty!");
 
-        Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Geobox");
+        Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Warbox");
 
         Warbox.EditorHandler.UpdateEditors();
 
@@ -138,7 +138,7 @@ public class ProjectHandler
     public void ClearProject()
     {
         CurrentProject = null;
-        Warbox.SetProgramTitle("No Project - Geobox");
+        Warbox.SetProgramTitle("No Project - Warbox");
         Warbox.ProjectType = ProjectType.Undefined;
         Warbox.GameRoot = "";
         Warbox.ProjectRoot = "";
@@ -147,11 +147,11 @@ public class ProjectHandler
 
     public void UpdateProjectVariables()
     {
-        Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Geobox");
+        Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Warbox");
         Warbox.ProjectType = CurrentProject.Config.GameType;
         Warbox.GameRoot = CurrentProject.Config.GameRoot;
         Warbox.ProjectRoot = Path.GetDirectoryName(CurrentProject.ProjectJsonPath);
-        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.geobox";
+        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.warbox";
     }
 
     public void AddProjectToRecentList(Project targetProject)

@@ -13,7 +13,7 @@ public class ProjectSettingsTab
         if (ImGui.CollapsingHeader("General", ImGuiTreeNodeFlags.DefaultOpen))
         {
             ImGui.Checkbox("Enable Automatic Recent Project Loading", ref CFG.Current.Project_LoadRecentProjectImmediately);
-            UIHelper.ShowHoverTooltip("The last loaded project will be automatically loaded when Smithbox starts up if this is enabled.");
+            UIHelper.ShowHoverTooltip("The last loaded project will be automatically loaded when Warbox starts up if this is enabled.");
 
             ImGui.Checkbox("Enable Recovery Folder", ref CFG.Current.System_EnableRecoveryFolder);
             UIHelper.ShowHoverTooltip("Enable a recovery project to be created upon an unexpected crash.");
@@ -38,7 +38,7 @@ public class ProjectSettingsTab
             }
 
             ImGui.Text("Automatically Save:");
-            UIHelper.ShowHoverTooltip("Determines which elements of Smithbox will be automatically saved, if automatic save is enabled.");
+            UIHelper.ShowHoverTooltip("Determines which elements of Warbox will be automatically saved, if automatic save is enabled.");
 
             ImGui.Checkbox("Project", ref CFG.Current.System_EnableAutoSave_Project);
             UIHelper.ShowHoverTooltip("The project.json will be automatically saved.");

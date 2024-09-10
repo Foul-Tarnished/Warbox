@@ -20,9 +20,9 @@ public class SystemTab
     {
         if (ImGui.CollapsingHeader("General", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            ImGui.Checkbox("Check for new versions of Smithbox during startup",
+            ImGui.Checkbox("Check for new versions of Warbox during startup",
                 ref CFG.Current.System_Check_Program_Update);
-            UIHelper.ShowHoverTooltip("When enabled Smithbox will automatically check for new versions upon program start.");
+            UIHelper.ShowHoverTooltip("When enabled Warbox will automatically check for new versions upon program start.");
 
             ImGui.SliderFloat("Frame Rate", ref CFG.Current.System_Frame_Rate, 20.0f, 240.0f);
             UIHelper.ShowHoverTooltip("Adjusts the frame rate of the viewport.");
@@ -60,7 +60,7 @@ public class SystemTab
                     CFG.Save();
                 }
             }
-            UIHelper.ShowHoverTooltip("This will delete your Smithbox folder in %appdata%/Local/, allowing it to be re-generated.");
+            UIHelper.ShowHoverTooltip("This will delete your Warbox folder in %appdata%/Local/, allowing it to be re-generated.");
         }
 
         if (ImGui.CollapsingHeader("Loggers"))
