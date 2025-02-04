@@ -137,10 +137,6 @@ public class CommonKeybindTab
                 KeyBindings.Current.CORE_UndoAction,
                 KeyBindings.Default.CORE_UndoAction);
 
-            KeyBindings.Current.CORE_SaveAll = InputTracker.KeybindLine(5,
-                KeyBindings.Current.CORE_SaveAll,
-                KeyBindings.Default.CORE_SaveAll);
-
             KeyBindings.Current.CORE_Save = InputTracker.KeybindLine(6,
                 KeyBindings.Current.CORE_Save,
                 KeyBindings.Default.CORE_Save);

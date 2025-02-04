@@ -12,7 +12,7 @@ public class ProjectSettingsTab
     {
         if (ImGui.CollapsingHeader("General", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            ImGui.Checkbox("Enable Automatic Recent Project Loading", ref CFG.Current.Project_LoadRecentProjectImmediately);
+            ImGui.Checkbox("Enable Automatic Recent Project Loading", ref CFG.Current.Project_LoadRecentProjectOnStart);
             UIHelper.ShowHoverTooltip("The last loaded project will be automatically loaded when Warbox starts up if this is enabled.");
 
             ImGui.Checkbox("Enable Recovery Folder", ref CFG.Current.System_EnableRecoveryFolder);

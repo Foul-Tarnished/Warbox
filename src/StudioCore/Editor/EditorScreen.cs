@@ -17,18 +17,6 @@ public interface EditorScreen
     public string CommandEndpoint { get; }
 
     /// <summary>
-    ///     Description of data that will be saved that will show in the File menu
-    /// </summary>
-    public string SaveType { get; }
-
-    public bool FirstFrame { get; set; }
-
-    /// <summary>
-    ///     Init function for setting up the editor
-    /// </summary>
-    public void Init();
-
-    /// <summary>
     ///     Called when a new project has been opened
     /// </summary>
     /// <param name="newSettings">New settings for the project</param>
@@ -43,11 +31,6 @@ public interface EditorScreen
     ///     Save specific data in this editor
     /// </summary>
     public void Save();
-
-    /// <summary>
-    ///     Save all data in this editor
-    /// </summary>
-    public void SaveAll();
 
     /// <summary>
     ///     Draw the main GUI using ImGUI

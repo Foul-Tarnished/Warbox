@@ -21,6 +21,7 @@ using StudioCore.Interface;
 using StudioCore.Core;
 using StudioCore.Tools;
 using StudioCore.Core.Project;
+using StudioCore.Core.Data;
 
 namespace StudioCore;
 
@@ -29,11 +30,11 @@ public class Warbox
     public static EditorHandler EditorHandler;
     public static WindowHandler WindowHandler;
     public static ProjectHandler ProjectHandler;
+    public static DataHandler DataHandler;
 
-    public static ProjectType ProjectType = ProjectType.Undefined;
-    public static string GameRoot = "";
-    public static string ProjectRoot = "";
-    public static string SmithboxDataRoot = AppContext.BaseDirectory; // Fallback directory
+    public static string DataRoot = "";
+    public static string ProjectDataRoot = "";
+    public static string ProjectDataStore = AppContext.BaseDirectory; // Fallback directory
 
     private static double _desiredFrameLengthSeconds = 1.0 / 20.0f;
     private static readonly bool _limitFrameRate = true;
@@ -92,6 +93,9 @@ public class Warbox
 
         // Handlers
         ProjectHandler = new ProjectHandler();
+
+        DataHandler = new DataHandler();
+
         EditorHandler = new EditorHandler(_context);
         WindowHandler = new WindowHandler(_context);
 
@@ -219,43 +223,9 @@ public class Warbox
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
     }
 
-    private void CheckProgramUpdate()
-    {
-        Octokit.GitHubClient gitHubClient = new(new Octokit.ProductHeaderValue("Warbox"));
-        Octokit.Release release = gitHubClient.Repository.Release.GetLatest("vawser", "Warbox").Result;
-        var isVer = false;
-        var verstring = "";
-        foreach (var c in release.TagName)
-        {
-            if (char.IsDigit(c) || (isVer && c == '.'))
-            {
-                verstring += c;
-                isVer = true;
-            }
-            else
-            {
-                isVer = false;
-            }
-        }
-
-        if (Version.Parse(verstring) > Version.Parse(_version))
-        {
-            // Update available
-            _programUpdateAvailable = true;
-            _releaseUrl = release.HtmlUrl;
-        }
-    }
-
     public void Run()
     {
         SetupCSharpDefaults();
-
-        if (CFG.Current.System_Check_Program_Update)
-        {
-            TaskManager.Run(new TaskManager.LiveTask("Check Program Updates",
-                TaskManager.RequeueType.None, true,
-                () => CheckProgramUpdate()));
-        }
 
         long previousFrameTicks = 0;
         Stopwatch sw = new();
@@ -428,10 +398,10 @@ public class Warbox
             var success = ProjectHandler.CreateRecoveryProject();
             if (success)
             {
-                EditorHandler.SaveAllFocusedEditor();
+                EditorHandler.SaveFocusedEditor();
 
                 PlatformUtils.Instance.MessageBox(
-                    $"Attempted to save project files to {ProjectRoot} for manual recovery.\n" +
+                    $"Attempted to save project files to {ProjectDataRoot} for manual recovery.\n" +
                     "You must manually replace your project files with these recovery files should you wish to restore them.\n" +
                     "Given the program has crashed, these files may be corrupt and you should backup your last good saved\n" +
                     "files before attempting to use these.",
@@ -501,26 +471,9 @@ public class Warbox
 
         if (ImGui.BeginMainMenuBar())
         {
-            WindowHandler.HandleWindowIconBar();
             EditorHandler.HandleEditorSharedBar();
             EditorHandler.FocusedEditor.DrawEditorMenu();
-
-            // Program Update
-            if (_programUpdateAvailable)
-            {
-                ImGui.Separator();
-
-                ImGui.PushStyleColor(ImGuiCol.Text, CFG.Current.ImGui_Benefit_Text_Color);
-                if (ImGui.Button("Update Available"))
-                {
-                    Process myProcess = new();
-                    myProcess.StartInfo.UseShellExecute = true;
-                    myProcess.StartInfo.FileName = _releaseUrl;
-                    myProcess.Start();
-                }
-
-                ImGui.PopStyleColor();
-            }
+            WindowHandler.HandleWindowIconBar();
 
             TaskLogs.Display();
 
@@ -595,8 +548,6 @@ public class Warbox
             }
             else
             {
-                // Reset this so on Focus the first frame focusing happens
-                editor.FirstFrame = true;
                 ImGui.PopStyleColor(1);
                 ImGui.PopStyleVar(1);
                 ImGui.End();
@@ -612,6 +563,7 @@ public class Warbox
 
         ProjectHandler.OnGui();
         WindowHandler.OnGui();
+        DataHandler.OnGui();
 
         // Tool windows
         ColorPicker.DisplayColorPicker();

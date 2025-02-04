@@ -126,11 +126,6 @@ public class KeyBindings
             Key.Z,
             true);
 
-        public KeyBind CORE_SaveAll = new(
-            "Save All", 
-            "Saves all modified files within the focused editor.",
-            Key.Unknown);
-
         public KeyBind CORE_Save = new(
             "Save", 
             "Save the current file-level selection within the focused editor.", 

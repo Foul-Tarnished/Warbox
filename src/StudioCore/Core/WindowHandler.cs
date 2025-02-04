@@ -49,21 +49,27 @@ public class WindowHandler
 
     public void HandleWindowIconBar()
     {
-        if (ImGui.Button($"{ForkAwesome.Cogs}##SettingsWindow"))
-        {
-            SettingsWindow.ToggleMenuVisibility();
-        }
-        UIHelper.ShowHoverTooltip($"Configuration\n{KeyBindings.Current.CORE_ConfigurationWindow.HintText}");
+        ImGui.Separator();
 
-        if (ImGui.Button($"{ForkAwesome.KeyboardO}##KeybindWindow"))
+        if (ImGui.Button($"Keybinds##KeybindWindow"))
         {
             KeybindWindow.ToggleMenuVisibility();
         }
         UIHelper.ShowHoverTooltip($"Keybinds\n{KeyBindings.Current.CORE_KeybindConfigWindow.HintText}");
 
+        ImGui.Separator();
+
+        if (ImGui.Button($"Settings##SettingsWindow"))
+        {
+            SettingsWindow.ToggleMenuVisibility();
+        }
+        UIHelper.ShowHoverTooltip($"Configuration\n{KeyBindings.Current.CORE_ConfigurationWindow.HintText}");
+
         if (CFG.Current.DisplayDebugTools)
         {
-            if (ImGui.Button($"{ForkAwesome.LightbulbO}##DebugWindow"))
+            ImGui.Separator();
+
+            if (ImGui.Button($"Debugging##DebugWindow"))
             {
                 DebugWindow.ToggleMenuVisibility();
             }

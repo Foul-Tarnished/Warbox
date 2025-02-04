@@ -31,16 +31,16 @@ public class ProjectModal
     {
         ImGui.BeginTabBar("ProjectModelTabs");
 
-        if (ImGui.BeginTabItem("Load Project"))
-        {
-            DisplayProjectLoadOptions();
-
-            ImGui.EndTabItem();
-        }
-;
         if (ImGui.BeginTabItem("Create Project"))
         {
             DisplayNewProjectCreation();
+
+            ImGui.EndTabItem();
+        }
+
+        if (ImGui.BeginTabItem("Load Project"))
+        {
+            DisplayProjectLoadOptions();
 
             ImGui.EndTabItem();
         }
@@ -50,7 +50,7 @@ public class ProjectModal
 
     public void RecentProjectEntry(CFG.RecentProject p, int id)
     {
-        if (ImGui.MenuItem($@"{p.GameType}: {p.Name}##{id}"))
+        if (ImGui.MenuItem($@"Projects: {p.Name}##{id}"))
         {
             if (File.Exists(p.ProjectFile))
             {
@@ -140,16 +140,7 @@ public class ProjectModal
         {
             if (PlatformUtils.Instance.OpenFolderDialog("Select project directory...", out var path))
             {
-                if (IsLogicalDrive(path))
-                {
-                    DialogResult message = PlatformUtils.Instance.MessageBox(
-                        "Project Directory has been placed in a drive root. This is not allowed. Please select a different location.", "Error",
-                        MessageBoxButtons.OK);
-                }
-                else
-                {
-                    newProjectDirectory = path;
-                }
+                newProjectDirectory = path;
             }
         }
 
@@ -162,16 +153,7 @@ public class ProjectModal
         var gname = newProject.Config != null ? newProject.Config.GameRoot : "";
         if (ImGui.InputText("##dataDirectoryInput", ref gname, 255))
         {
-            if (File.Exists(gname))
-            {
-                newProject.Config.GameRoot = Path.GetDirectoryName(gname);
-            }
-            else
-            {
-                newProject.Config.GameRoot = gname;
-            }
-
-            newProject.Config.GameType = Warbox.ProjectHandler.GetProjectTypeFromDirectory(gname);
+            newProject.Config.GameRoot = gname;
         }
 
         ImGui.SameLine();
@@ -183,11 +165,8 @@ public class ProjectModal
                     out var path))
             {
                 newProject.Config.GameRoot = Path.GetDirectoryName(path);
-                newProject.Config.GameType = Warbox.ProjectHandler.GetProjectTypeFromDirectory(path);
             }
         }
-
-        ImGui.Text($@"Project Type: {newProject.Config.GameType}");
 
         ImGui.Separator();
 
@@ -215,76 +194,39 @@ public class ProjectModal
     {
         var validated = true;
 
-        if (newProject.Config.GameType != ProjectType.Undefined)
+        if (newProject.Config.GameRoot == null ||
+            !Directory.Exists(newProject.Config.GameRoot))
         {
-            if (newProject.Config.GameRoot == null ||
-                !Directory.Exists(newProject.Config.GameRoot))
-            {
-                PlatformUtils.Instance.MessageBox(
-                    "Your game directory path does not exist. Please select a valid directory.", "Error",
-                    MessageBoxButtons.OK);
-                validated = false;
-            }
+            PlatformUtils.Instance.MessageBox(
+                "Your game directory path does not exist. Please select a valid directory.", "Error",
+                MessageBoxButtons.OK);
+            validated = false;
+        }
 
-            if (validated && newProject.Config.GameType == ProjectType.Undefined)
-            {
-                PlatformUtils.Instance.MessageBox("Your game directory is not a valid supported game.",
-                    "Error",
-                    MessageBoxButtons.OK);
-                validated = false;
-            }
 
-            if (validated && (newProjectDirectory == null || !Directory.Exists(newProjectDirectory)))
-            {
-                PlatformUtils.Instance.MessageBox("Your selected project directory is not valid.", "Error",
-                    MessageBoxButtons.OK);
-                validated = false;
-            }
+        if (validated && (newProjectDirectory == null || !Directory.Exists(newProjectDirectory)))
+        {
+            PlatformUtils.Instance.MessageBox("Your selected project directory is not valid.", "Error",
+                MessageBoxButtons.OK);
+            validated = false;
+        }
 
-            if (validated && File.Exists($@"{newProjectDirectory}\project.json"))
+        if (validated && File.Exists($@"{newProjectDirectory}\project.json"))
+        {
+            DialogResult message = PlatformUtils.Instance.MessageBox(
+                "Your selected project directory already contains a project.json. Would you like to replace it?",
+                "Error",
+                MessageBoxButtons.YesNo);
+            if (message == DialogResult.No)
             {
-                DialogResult message = PlatformUtils.Instance.MessageBox(
-                    "Your selected project directory already contains a project.json. Would you like to replace it?",
-                    "Error",
-                    MessageBoxButtons.YesNo);
-                if (message == DialogResult.No)
-                {
-                    validated = false;
-                }
-            }
-
-            if (validated && newProject.Config.GameRoot == newProjectDirectory)
-            {
-                DialogResult message = PlatformUtils.Instance.MessageBox(
-                    "Project Directory is the same as Game Directory, which allows game files to be overwritten directly.\n\n" +
-                    "Continue and create project anyway?", "Caution",
-                    MessageBoxButtons.OKCancel);
-                if (message != DialogResult.OK)
-                {
-                    validated = false;
-                }
-            }
-
-            if (validated && IsLogicalDrive(newProjectDirectory))
-            {
-                DialogResult message = PlatformUtils.Instance.MessageBox(
-                    "Project Directory has been placed in a drive root. This is not allowed. Please select a different location.", "Error",
-                    MessageBoxButtons.OK);
-                validated = false;
-            }
-
-            if (validated && (newProject.Config.ProjectName == null || newProject.Config.ProjectName == ""))
-            {
-                PlatformUtils.Instance.MessageBox("You must specify a project name.", "Error",
-                    MessageBoxButtons.OK);
                 validated = false;
             }
         }
-        else
+
+        if (validated && (newProject.Config.ProjectName == null || newProject.Config.ProjectName == ""))
         {
-            PlatformUtils.Instance.MessageBox(
-                    "No valid game directory has been detected. Please select a valid directory.", "Error",
-                    MessageBoxButtons.OK);
+            PlatformUtils.Instance.MessageBox("You must specify a project name.", "Error",
+                MessageBoxButtons.OK);
             validated = false;
         }
 

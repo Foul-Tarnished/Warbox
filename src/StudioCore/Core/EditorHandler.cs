@@ -29,11 +29,6 @@ public class EditorHandler
         ];
 
         FocusedEditor = TextEditor;
-
-        foreach (EditorScreen editor in EditorList)
-        {
-            editor.Init();
-        }
     }
 
     public void UpdateEditors()
@@ -42,11 +37,6 @@ public class EditorHandler
         {
             editor.OnProjectChanged();
         }
-    }
-
-    public void SaveAllFocusedEditor()
-    {
-        FocusedEditor.SaveAll();
     }
 
     public void SaveFocusedEditor()
@@ -60,12 +50,6 @@ public class EditorHandler
         {
             Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
             SaveFocusedEditor();
-        }
-
-        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_SaveAll))
-        {
-            Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-            SaveAllFocusedEditor();
         }
     }
 
@@ -102,7 +86,6 @@ public class EditorHandler
         if (ImGui.BeginMenu("File"))
         {
             // New Project
-            UIHelper.ShowMenuIcon($"{ForkAwesome.File}");
             DisplayTaskStatus();
             if (ImGui.MenuItem("New Project", "", false, MayChangeProject()))
             {
@@ -111,7 +94,6 @@ public class EditorHandler
             }
 
             // Open Project
-            UIHelper.ShowMenuIcon($"{ForkAwesome.Folder}");
             DisplayTaskStatus();
             if (ImGui.MenuItem("Open Project", "", false, MayChangeProject()))
             {
@@ -119,7 +101,6 @@ public class EditorHandler
             }
 
             // Recent Projects
-            UIHelper.ShowMenuIcon($"{ForkAwesome.FolderOpen}");
             DisplayTaskStatus();
             if (ImGui.BeginMenu("Recent Projects", MayChangeProject() && CFG.Current.RecentProjects.Count > 0))
             {
@@ -129,19 +110,18 @@ public class EditorHandler
             }
 
             // Open in Explorer
-            UIHelper.ShowMenuIcon($"{ForkAwesome.Archive}");
             if (ImGui.BeginMenu("Open in Explorer",
                     !TaskManager.AnyActiveTasks() && CFG.Current.RecentProjects.Count > 0))
             {
                 if (ImGui.MenuItem("Project Folder", "", false))
                 {
-                    var projectPath = Warbox.ProjectRoot;
+                    var projectPath = Warbox.ProjectDataRoot;
                     Process.Start("explorer.exe", projectPath);
                 }
 
                 if (ImGui.MenuItem("Game Folder", "", false))
                 {
-                    var gamePath = Warbox.GameRoot;
+                    var gamePath = Warbox.DataRoot;
                     Process.Start("explorer.exe", gamePath);
                 }
 
@@ -155,23 +135,15 @@ public class EditorHandler
             }
 
             // Save
-            UIHelper.ShowMenuIcon($"{ForkAwesome.FloppyO}");
-            if (ImGui.MenuItem($"Save Selected {FocusedEditor.SaveType}",
-                    KeyBindings.Current.CORE_Save.HintText))
+            if (ImGui.MenuItem($"Save", KeyBindings.Current.CORE_Save.HintText))
             {
                 Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
                 SaveFocusedEditor();
             }
 
-            // Save All
-            UIHelper.ShowMenuIcon($"{ForkAwesome.FloppyO}");
-            if (ImGui.MenuItem($"Save All Modified {FocusedEditor.SaveType}", KeyBindings.Current.CORE_SaveAll.HintText))
-            {
-                Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-                SaveAllFocusedEditor();
-            }
-
             ImGui.EndMenu();
         }
+
+        ImGui.Separator();
     }
 }

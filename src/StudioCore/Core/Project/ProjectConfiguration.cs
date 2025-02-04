@@ -24,7 +24,6 @@ public class ProjectConfiguration
 {
     public string ProjectName { get; set; } = "";
     public string GameRoot { get; set; } = "";
-    public ProjectType GameType { get; set; } = ProjectType.Undefined;
 
     [JsonExtensionData] public IDictionary<string, JsonElement> AdditionalData { get; set; }
 }

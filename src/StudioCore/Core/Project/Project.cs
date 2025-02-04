@@ -8,8 +8,6 @@ namespace StudioCore.Core.Project;
 /// </summary>
 public class Project
 {
-    public ProjectType Type { get; set; } = ProjectType.Undefined;
-
     /// <summary>
     /// The game interroot where all the game assets are
     /// </summary>
@@ -31,7 +29,6 @@ public class Project
 
     public Project()
     {
-        Type = ProjectType.Undefined;
         GameRootDirectory = "";
         GameModDirectory = "";
         ProjectJsonPath = AppContext.BaseDirectory;

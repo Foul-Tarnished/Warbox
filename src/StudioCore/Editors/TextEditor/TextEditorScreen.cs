@@ -7,6 +7,7 @@ using Veldrid.Sdl2;
 using StudioCore.Utilities;
 using StudioCore.Core.Project;
 using StudioCore.Interface;
+using StudioCore.Editors.TextEditor;
 
 namespace StudioCore.TextEditor;
 
@@ -14,45 +15,38 @@ public class TextEditorScreen : EditorScreen
 {
     public string EditorName => "Text Editor";
     public string CommandEndpoint => "text";
-    public string SaveType => "Text";
-
-    public bool FirstFrame { get; set; }
-
-    public int _activeIDCache = -1;
 
     public ActionManager EditorActionManager = new();
 
+    public TextEditorState EditorState;
+    public FileSelectionView FileSelectionView;
+    public TextRowView TextRowView;
+    public TextCellView TextCellView;
+
     public TextEditorScreen(Sdl2Window window, GraphicsDevice device)
     {
-
-    }
-
-    public void Init()
-    {
-
+        EditorState = new(this);
+        FileSelectionView = new(this);
+        TextRowView = new(this);
+        TextCellView = new(this);
     }
 
     public void DrawEditorMenu()
     {
-        ImGui.Separator();
-
         if (ImGui.BeginMenu("Edit"))
         {
-            UIHelper.ShowMenuIcon($"{ForkAwesome.Undo}");
             if (ImGui.MenuItem($"Undo", KeyBindings.Current.CORE_UndoAction.HintText, false,
                     EditorActionManager.CanUndo()))
             {
                 EditorActionManager.UndoAction();
             }
 
-            UIHelper.ShowMenuIcon($"{ForkAwesome.Undo}");
             if (ImGui.MenuItem("Undo All", "", false,
                     EditorActionManager.CanUndo()))
             {
                 EditorActionManager.UndoAllAction();
             }
 
-            UIHelper.ShowMenuIcon($"{ForkAwesome.Repeat}");
             if (ImGui.MenuItem("Redo", KeyBindings.Current.CORE_RedoAction.HintText, false,
                     EditorActionManager.CanRedo()))
             {
@@ -80,21 +74,16 @@ public class TextEditorScreen : EditorScreen
         var dsid = ImGui.GetID("DockSpace_TextEntries");
         ImGui.DockSpace(dsid, new Vector2(0, 0), ImGuiDockNodeFlags.None);
 
-        if (Warbox.ProjectType == ProjectType.Undefined)
-        {
-            ImGui.Begin("Editor##InvalidTextEditor");
+        Shortcuts();
+        FileSelectionView.Shortcuts();
+        TextRowView.Shortcuts();
+        TextCellView.Shortcuts();
 
-            ImGui.Text($"This editor does not support {Warbox.ProjectType}.");
+        EditorCommandQueue(initcmd);
 
-            ImGui.End();
-        }
-        else
-        {
-            Shortcuts();
-            EditorCommandQueue(initcmd);
-
-            EditorGUI();
-        }
+        FileSelectionView.Display();
+        TextRowView.Display();
+        TextCellView.Display();
 
         ImGui.PopStyleVar();
         ImGui.PopStyleColor(1);
@@ -107,14 +96,6 @@ public class TextEditorScreen : EditorScreen
 
     public void Save()
     {
-        if (Warbox.ProjectType == ProjectType.Undefined)
-            return;
-    }
-
-    public void SaveAll()
-    {
-        if (Warbox.ProjectType == ProjectType.Undefined)
-            return;
     }
 
     private void ResetActionManager()
@@ -143,10 +124,5 @@ public class TextEditorScreen : EditorScreen
         {
 
         }
-    }
-
-    private void EditorGUI()
-    {
-
     }
 }

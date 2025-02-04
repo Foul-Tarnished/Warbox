@@ -37,7 +37,7 @@ public class ProjectHandler
     }
     public void OnGui()
     {
-        if (!RecentProjectLoad && Current.Project_LoadRecentProjectImmediately)
+        if (!RecentProjectLoad && Current.Project_LoadRecentProjectOnStart)
         {
             RecentProjectLoad = true;
             IsInitialLoad = false;
@@ -92,12 +92,11 @@ public class ProjectHandler
 
         SetGameRootDirectory(CurrentProject);
 
-        Warbox.ProjectType = CurrentProject.Config.GameType;
-        Warbox.GameRoot = CurrentProject.Config.GameRoot;
-        Warbox.ProjectRoot = Path.GetDirectoryName(path);
-        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.warbox";
+        Warbox.DataRoot = CurrentProject.Config.GameRoot;
+        Warbox.ProjectDataRoot = Path.GetDirectoryName(path);
+        Warbox.ProjectDataStore = $"{Warbox.ProjectDataRoot}\\.warbox";
 
-        if (Warbox.ProjectRoot == "")
+        if (Warbox.ProjectDataRoot == "")
             TaskLogs.AddLog("Warbox ProjectRoot is empty!");
 
         Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Warbox");
@@ -139,19 +138,17 @@ public class ProjectHandler
     {
         CurrentProject = null;
         Warbox.SetProgramTitle("No Project - Warbox");
-        Warbox.ProjectType = ProjectType.Undefined;
-        Warbox.GameRoot = "";
-        Warbox.ProjectRoot = "";
-        Warbox.SmithboxDataRoot = "";
+        Warbox.DataRoot = "";
+        Warbox.ProjectDataRoot = "";
+        Warbox.ProjectDataStore = "";
     }
 
     public void UpdateProjectVariables()
     {
         Warbox.SetProgramTitle($"{CurrentProject.Config.ProjectName} - Warbox");
-        Warbox.ProjectType = CurrentProject.Config.GameType;
-        Warbox.GameRoot = CurrentProject.Config.GameRoot;
-        Warbox.ProjectRoot = Path.GetDirectoryName(CurrentProject.ProjectJsonPath);
-        Warbox.SmithboxDataRoot = $"{Warbox.ProjectRoot}\\.warbox";
+        Warbox.DataRoot = CurrentProject.Config.GameRoot;
+        Warbox.ProjectDataRoot = Path.GetDirectoryName(CurrentProject.ProjectJsonPath);
+        Warbox.ProjectDataStore = $"{Warbox.ProjectDataRoot}\\.warbox";
     }
 
     public void AddProjectToRecentList(Project targetProject)
@@ -160,7 +157,6 @@ public class ProjectHandler
         RecentProject recent = new()
         {
             Name = targetProject.Config.ProjectName,
-            GameType = targetProject.Config.GameType,
             ProjectFile = targetProject.ProjectJsonPath
         };
         AddMostRecentProject(recent);
@@ -216,51 +212,25 @@ public class ProjectHandler
         if (!Directory.Exists(targetProject.Config.GameRoot))
         {
             PlatformUtils.Instance.MessageBox(
-                $@"Could not find game data directory for {targetProject.Config.GameType}. Please select the game directory.",
+                $@"Could not find game data directory. Please select the game directory.",
                 "Error",
                 MessageBoxButtons.OK);
 
             while (true)
             {
                 if (PlatformUtils.Instance.OpenFolderDialog(
-                        $"Select game directory for {targetProject.Config.GameType}...",
+                        $"Select game directory...",
                         out var path))
                 {
                     targetProject.Config.GameRoot = path;
-                    ProjectType gametype = GetProjectTypeFromDirectory(targetProject.Config.GameRoot);
+                    targetProject.Config.GameRoot = Path.GetDirectoryName(targetProject.Config.GameRoot);
 
-                    if (gametype == targetProject.Config.GameType)
-                    {
-                        targetProject.Config.GameRoot = Path.GetDirectoryName(targetProject.Config.GameRoot);
+                    WriteProjectConfig(targetProject);
 
-                        WriteProjectConfig(targetProject);
-
-                        break;
-                    }
-
-                    PlatformUtils.Instance.MessageBox(
-                        $@"Selected directory was not for {CurrentProject.Config.GameType}. Please select the game directory.",
-                        "Error",
-                        MessageBoxButtons.OK);
-                }
-                else
-                {
                     break;
                 }
             }
         }
-    }
-
-    public ProjectType GetProjectTypeFromDirectory(string directory)
-    {
-        var type = ProjectType.Undefined;
-
-        if (directory.Contains("Europa Universalis IV"))
-        {
-            type = ProjectType.EU4;
-        }
-
-        return type;
     }
 
     public void UpdateTimer()
@@ -292,32 +262,29 @@ public class ProjectHandler
     {
         if (Current.System_EnableAutoSave)
         {
-            if (Warbox.ProjectType != ProjectType.Undefined)
+            if (Current.System_EnableAutoSave_Project)
             {
-                if (Current.System_EnableAutoSave_Project)
-                {
-                    WriteProjectConfig(CurrentProject);
-                }
-
-                TaskLogs.AddLog($"Automatic Save occured at {e.SignalTime}");
+                WriteProjectConfig(CurrentProject);
             }
+
+            TaskLogs.AddLog($"Automatic Save occured at {e.SignalTime}");
         }
     }
 
     public bool CreateRecoveryProject()
     {
-        if (Warbox.GameRoot == null || Warbox.ProjectRoot == null)
+        if (Warbox.DataRoot == null || Warbox.ProjectDataRoot == null)
             return false;
 
         try
         {
             var time = DateTime.Now.ToString("dd-MM-yyyy-(hh-mm-ss)", CultureInfo.InvariantCulture);
 
-            Warbox.ProjectRoot = Warbox.ProjectRoot + $@"\recovery\{time}";
+            Warbox.ProjectDataRoot = Warbox.ProjectDataRoot + $@"\recovery\{time}";
 
-            if (!Directory.Exists(Warbox.ProjectRoot))
+            if (!Directory.Exists(Warbox.ProjectDataRoot))
             {
-                Directory.CreateDirectory(Warbox.ProjectRoot);
+                Directory.CreateDirectory(Warbox.ProjectDataRoot);
             }
 
             return true;
@@ -361,13 +328,9 @@ public class ProjectHandler
 
         foreach (RecentProject p in Current.RecentProjects.ToArray())
         {
-            // EU4
-            if (p.GameType == ProjectType.EU4)
-            {
-                RecentProjectEntry(p, id);
+            RecentProjectEntry(p, id);
 
-                id++;
-            }
+            id++;
         }
     }
 
@@ -379,7 +342,7 @@ public class ProjectHandler
             RemoveRecentProject(p);
         }
 
-        if (ImGui.MenuItem($@"{p.GameType}: {p.Name}##{id}"))
+        if (ImGui.MenuItem($@"Projects: {p.Name}##{id}"))
         {
             if (File.Exists(p.ProjectFile))
             {

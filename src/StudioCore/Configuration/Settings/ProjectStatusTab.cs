@@ -32,9 +32,8 @@ public class ProjectStatusTab
         else
         {
             ImGui.Text($"Project Name: {Warbox.ProjectHandler.CurrentProject.Config.ProjectName}");
-            ImGui.Text($"Project Type: {Warbox.ProjectType}");
-            ImGui.Text($"Project Root Directory: {Warbox.GameRoot}");
-            ImGui.Text($"Project Mod Directory: {Warbox.ProjectRoot}");
+            ImGui.Text($"Project Root Directory: {Warbox.DataRoot}");
+            ImGui.Text($"Project Mod Directory: {Warbox.ProjectDataRoot}");
 
             ImGui.Separator();
 

@@ -49,7 +49,7 @@ public class CFG
     //**************
     // Project
     //**************
-    public bool Project_LoadRecentProjectImmediately = false;
+    public bool Project_LoadRecentProjectOnStart = true;
 
     //**************
     // Interface
@@ -290,8 +290,6 @@ public class CFG
     public string LastProjectFile { get; set; } = "";
     public List<RecentProject> RecentProjects { get; set; } = new();
 
-    public ProjectType Game_Type { get; set; } = ProjectType.Undefined;
-
     public int GFX_Display_Width { get; set; } = 1920;
     public int GFX_Display_Height { get; set; } = 1057;
 
@@ -474,7 +472,7 @@ public class CFG
         CFG.Save();
     }
 
-    public class RecentProject : IComparable<RecentProject>
+    public class RecentProject
     {
         // JsonExtensionData stores info in config file not present in class in order to retain settings between versions.
 #pragma warning disable IDE0051
@@ -483,7 +481,6 @@ public class CFG
 
         public string Name { get; set; }
         public string ProjectFile { get; set; }
-        public ProjectType GameType { get; set; }
 
         public bool IsSameProjectLocation(RecentProject otherProject)
         {
@@ -492,14 +489,6 @@ public class CFG
                 return true;
             }
             return false;
-        }
-
-        public int CompareTo(RecentProject other)
-        {
-            var typeInt = (int)GameType;
-            var otherInt = (int)other.GameType;
-
-            return typeInt.CompareTo(otherInt);
         }
     }
 }
