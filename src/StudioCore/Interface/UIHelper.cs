@@ -12,6 +12,27 @@ namespace StudioCore.Interface;
 
 public static class UIHelper
 {
+    public static void DisplayAlias(string aliasName)
+    {
+        if (aliasName != "")
+        {
+            var sanitisedName = aliasName.Replace("%", "%%");
+
+            ImGui.SameLine();
+
+            if (CFG.Current.System_WrapAliasDisplay)
+            {
+                ImGui.PushTextWrapPos();
+                ImGui.TextColored(CFG.Current.ImGui_AliasName_Text, $"{sanitisedName}");
+                ImGui.PopTextWrapPos();
+            }
+            else
+            {
+                ImGui.TextColored(CFG.Current.ImGui_AliasName_Text, $"{sanitisedName}");
+            }
+        }
+    }
+
     public static void ShowHoverTooltip(string desc)
     {
         if (CFG.Current.System_Show_UI_Tooltips)

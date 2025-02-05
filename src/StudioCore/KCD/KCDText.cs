@@ -54,6 +54,11 @@ public class KCDText
         {
             Cells.AddRange(cells);
         }
+
+        public Row DeepCopy()
+        {
+            return (Row)this.MemberwiseClone();
+        }
     }
 }
 

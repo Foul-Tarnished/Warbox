@@ -38,8 +38,8 @@ public class DataHandler
         if (Warbox.DataRoot == "")
             return new Dictionary<DataStatus, XDocument>();
 
-        var dataDir = $"{Warbox.DataRoot}//{folderName}//{pakName}.pak";
-        var projectDir = $"{Warbox.ProjectDataRoot}//{folderName}//";
+        var dataDir = $"{Warbox.DataRoot}\\{folderName}\\{pakName}.pak";
+        var projectDir = $"{Warbox.ProjectDataRoot}\\{folderName}\\";
 
         var baseData = ReadXmlFromZip(dataDir);
         var projectData = ReadXmlFromDirectory(projectDir);
@@ -48,23 +48,40 @@ public class DataHandler
         // Replace entries with project data if present
         if (projectData.Count > 0)
         {
-            foreach (var pEntry in projectData)
+            foreach (var bEntry in baseData)
             {
-                var pDataStatus = pEntry.Key;
+                var bDataStatus = bEntry.Key;
+                var hasProjectVersion = false;
 
-                foreach (var bEntry in baseData)
+                foreach (var pEntry in projectData)
                 {
-                    var bDataStatus = bEntry.Key;
+                    var pDataStatus = pEntry.Key;
 
+                    // Is match for existing file, override
                     if (bDataStatus.Name == pDataStatus.Name)
                     {
+                        hasProjectVersion = true;
+
                         pEntry.Key.IsProjectData = true;
-                        finalData.Add(bDataStatus, pEntry.Value);
+                        if(finalData.ContainsKey(pEntry.Key))
+                        {
+                            finalData[pEntry.Key] = pEntry.Value;
+                        }
                     }
+                    // Is unique to project, new file
                     else
                     {
-                        finalData.Add(bDataStatus, bEntry.Value);
+                        if (!finalData.ContainsKey(pEntry.Key))
+                        {
+                            finalData.Add(pDataStatus, pEntry.Value);
+                        }
                     }
+                }
+
+                // Is not affected by project, vanilla
+                if(!hasProjectVersion)
+                {
+                    finalData.Add(bDataStatus, bEntry.Value);
                 }
             }
         }

@@ -8,6 +8,7 @@ using StudioCore.Utilities;
 using StudioCore.Core.Project;
 using StudioCore.Interface;
 using StudioCore.Editors.TextEditor;
+using System.IO;
 
 namespace StudioCore.TextEditor;
 
@@ -16,12 +17,12 @@ public class TextEditorScreen : EditorScreen
     public string EditorName => "Text Editor";
     public string CommandEndpoint => "text";
 
-    public ActionManager EditorActionManager = new();
-
     public TextEditorState EditorState;
     public FileSelectionView FileSelectionView;
     public TextRowView TextRowView;
     public TextCellView TextCellView;
+
+    public ActionManager EditorActionManager = new();
 
     public TextEditorScreen(Sdl2Window window, GraphicsDevice device)
     {
@@ -96,6 +97,28 @@ public class TextEditorScreen : EditorScreen
 
     public void Save()
     {
+        EditorState.UpdateSelectedDocument();
+
+        var outputDir = $"{Warbox.ProjectDataRoot}\\Localization";
+
+        if(!Directory.Exists(outputDir))
+            Directory.CreateDirectory(outputDir);
+
+        var status = EditorState.SelectedStatus;
+        var document = Warbox.DataHandler.Localization[status];
+
+        var writePath = status.Path;
+        var fileDir = $"{outputDir}\\{writePath}";
+
+        // If it is a project-specific file, use the status Path as it is a full path
+        if (writePath.Contains(outputDir))
+        {
+            fileDir = $"{writePath}";
+        }
+
+        document.Save(fileDir);
+
+        TaskLogs.AddLog($"{fileDir} saved.");
     }
 
     private void ResetActionManager()

@@ -278,4 +278,8 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Editors\TextEditor\Actions\" />
+  </ItemGroup>
+
 </Project>

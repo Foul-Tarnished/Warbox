@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using StudioCore.Core.Data;
+using StudioCore.Editor;
 using StudioCore.KCD;
 using StudioCore.TextEditor;
 using System;
@@ -20,6 +21,11 @@ public class TextEditorState
     public KCDText SelectedText;
     public KCDText.Row SelectedTextRow;
 
+    public bool SelectNextText = false;
+    public bool SelectNextTextRow = false;
+
+    public ActionManager EditorActionManager = new();
+
     public TextEditorState(TextEditorScreen screen)
     {
         Screen = screen;
@@ -27,8 +33,21 @@ public class TextEditorState
 
     public void UpdateSelection(KeyValuePair<DataStatus, XDocument> selection)
     {
+        UpdateSelectedDocument();
+
         SelectedStatus = selection.Key;
         SelectedDocument = selection.Value;
         SelectedText = new KCDText(selection.Value);
+    }
+
+    public void UpdateSelectedDocument()
+    {
+        if (SelectedText != null && SelectedStatus.Modified)
+        {
+            if (Warbox.DataHandler.Localization.ContainsKey(SelectedStatus))
+            {
+                Warbox.DataHandler.Localization[SelectedStatus] = SelectedText.ExportXML();
+            }
+        }
     }
 }
