@@ -9,6 +9,7 @@ using StudioCore.Core.Project;
 using StudioCore.Interface;
 using StudioCore.Editors.TextEditor;
 using System.IO;
+using StudioCore.Core.Data;
 
 namespace StudioCore.TextEditor;
 
@@ -121,6 +122,20 @@ public class TextEditorScreen : EditorScreen
         TaskLogs.AddLog($"{fileDir} saved.");
     }
 
+    /// <summary>
+    /// Creates the PAK file for the Localization folder based of the current loose files
+    /// </summary>
+    public void Package()
+    {
+        // Save first so the files are up to date.
+        Save();
+
+        var sourceDir = $"{Warbox.ProjectDataRoot}\\Localization\\";
+        var pakName = "English_xml"; // Only support English for now.
+
+        DataHandler.ZipXmlFiles(sourceDir, $"{sourceDir}\\{pakName}.pak");
+    }
+
     private void ResetActionManager()
     {
         EditorActionManager.Clear();
@@ -128,7 +143,6 @@ public class TextEditorScreen : EditorScreen
 
     public void Shortcuts()
     {
-        // Only allow key shortcuts when an item [text box] is not currently activated
         if (EditorActionManager.CanUndo() && InputTracker.GetKeyDown(KeyBindings.Current.CORE_UndoAction))
         {
             EditorActionManager.UndoAction();

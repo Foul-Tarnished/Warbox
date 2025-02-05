@@ -214,4 +214,26 @@ public class DataHandler
             return Encoding.UTF8; // Default to UTF-8 if encoding is not specified
         }
     }
+
+    public static void ZipXmlFiles(string sourceDirectory, string zipFilePath)
+    {
+        if (!Directory.Exists(sourceDirectory))
+            throw new DirectoryNotFoundException($"Source directory not found: {sourceDirectory}");
+
+        string[] xmlFiles = Directory.GetFiles(sourceDirectory, "*.xml", SearchOption.AllDirectories);
+
+        if (xmlFiles.Length == 0)
+            throw new Exception("No XML files found in the directory.");
+
+        using (FileStream zipToCreate = new FileStream(zipFilePath, FileMode.Create))
+        using (ZipArchive archive = new ZipArchive(zipToCreate, ZipArchiveMode.Create))
+        {
+            foreach (string file in xmlFiles)
+            {
+                string relativePath = Path.GetRelativePath(sourceDirectory, file);
+
+                archive.CreateEntryFromFile(file, relativePath);
+            }
+        }
+    }
 }

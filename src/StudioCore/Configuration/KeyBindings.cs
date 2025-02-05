@@ -132,6 +132,12 @@ public class KeyBindings
             Key.S, 
             true);
 
+        public KeyBind CORE_Package = new(
+            "Save",
+            "Package the current file-level selection within the focused editor.",
+            Key.P,
+            true);
+
         // Windows
         public KeyBind CORE_ConfigurationWindow = new(
             "Configuration Window", 

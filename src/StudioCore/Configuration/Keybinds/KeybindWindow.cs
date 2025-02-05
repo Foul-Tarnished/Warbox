@@ -140,6 +140,10 @@ public class CommonKeybindTab
             KeyBindings.Current.CORE_Save = InputTracker.KeybindLine(6,
                 KeyBindings.Current.CORE_Save,
                 KeyBindings.Default.CORE_Save);
+
+            KeyBindings.Current.CORE_Package = InputTracker.KeybindLine(10,
+                KeyBindings.Current.CORE_Package,
+                KeyBindings.Default.CORE_Package);
         }
 
         if (ImGui.CollapsingHeader("Windows", ImGuiTreeNodeFlags.DefaultOpen))
