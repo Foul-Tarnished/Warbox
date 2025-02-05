@@ -278,4 +278,9 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Editors\TableEditor\Actions\" />
+    <Folder Include="Editors\TableEditor\Enums\" />
+  </ItemGroup>
+
 </Project>
