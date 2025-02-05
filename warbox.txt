@@ -1,0 +1,10 @@
+#-----------------------------------------------
+# Editors
+#-----------------------------------------------
+FEAT: Add option to Save as Patch:
+ This will save the XML file but with the project name appended to the end e.g. __MyMod.xml, and it will only include differences within that file, not the entire XML
+ 
+#-----------------------------------------------
+# Text Editor
+#-----------------------------------------------
+FEAT: add create option to File list context menu for project-specific text

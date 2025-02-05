@@ -59,6 +59,17 @@ public class KCDText
         {
             return (Row)this.MemberwiseClone();
         }
+
+        public Row NewCopy()
+        {
+            var newRow = new Row();
+            foreach(var cell in Cells)
+            {
+                newRow.Cells.Add(cell);
+            }
+
+            return newRow;
+        }
     }
 }
 

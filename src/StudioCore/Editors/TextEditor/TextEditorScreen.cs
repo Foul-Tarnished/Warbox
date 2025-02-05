@@ -14,7 +14,7 @@ namespace StudioCore.TextEditor;
 
 public class TextEditorScreen : EditorScreen
 {
-    public string EditorName => "Text Editor";
+    public string EditorName => "Localization";
     public string CommandEndpoint => "text";
 
     public TextEditorState EditorState;

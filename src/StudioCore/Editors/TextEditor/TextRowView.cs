@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using StudioCore.Configuration;
 using StudioCore.Core.Data;
+using StudioCore.Editors.TextEditor.Actions;
 using StudioCore.Interface;
 using StudioCore.KCD;
 using StudioCore.TextEditor;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using static Assimp.Metadata;
 
 namespace StudioCore.Editors.TextEditor;
 
@@ -52,8 +54,9 @@ public class TextRowView
 
                 if (curStatus != null && curDocument != null && curText != null)
                 {
-                    foreach (var entry in curText.Rows)
+                    for(int i = 0; i < curText.Rows.Count; i++)
                     {
+                        var entry = curText.Rows[i];
                         var firstCell = entry.Cells.FirstOrDefault();
 
                         if (firstCell != null)
@@ -70,7 +73,7 @@ public class TextRowView
 
                             if (TextSearchFilters.FilterRowList(name, text1, text2, SearchText))
                             {
-                                SelectionRow(entry, name, text1);
+                                SelectionRow(i, entry, name, text1);
                             }
                         }
                     }
@@ -83,13 +86,15 @@ public class TextRowView
         }
     }
 
-    private void SelectionRow(KCDText.Row entry, string name, string text1)
+    private void SelectionRow(int index, KCDText.Row entry, string name, string text1)
     {
+        var selectedIndex = EditorState.SelectedTextRowIndex;
         var curTextRow = EditorState.SelectedTextRow;
 
-        if (ImGui.Selectable($"{name}##textRow{name}", entry == curTextRow))
+        if (ImGui.Selectable($"{name}##textRow{name}{index}", selectedIndex == index))
         {
             EditorState.SelectedTextRow = entry;
+            EditorState.SelectedTextRowIndex = index;
         }
 
         // Only display aliases for entries of reasonable length
@@ -105,7 +110,7 @@ public class TextRowView
         if (ImGui.IsItemHovered() && EditorState.SelectNextTextRow)
         {
             EditorState.SelectNextTextRow = false;
-            EditorState.SelectedTextRow = entry;
+            EditorState.SelectedTextRowIndex = index;
         }
         if (ImGui.IsItemFocused() && (InputTracker.GetKey(Veldrid.Key.Up) || InputTracker.GetKey(Veldrid.Key.Down)))
         {
@@ -113,23 +118,22 @@ public class TextRowView
         }
 
         // Context
-        if (entry == curTextRow)
+        if (selectedIndex == index)
         {
-            if (ImGui.BeginPopupContextItem($"##textRowContext"))
+            if (ImGui.BeginPopupContextItem($"##textRowContext{index}"))
             {
                 // Duplicate
                 if (ImGui.Selectable("Duplicate"))
                 {
-                    SuspendView = true;
-                    EditorState.SelectedText.Rows.Add(entry.DeepCopy());
+                    var action = new AddTextRow(EditorState.SelectedText, index);
+                    Screen.EditorActionManager.ExecuteAction(action);
                 }
 
                 // Remove
                 if (ImGui.Selectable("Remove"))
                 {
-                    SuspendView = true;
-                    var rowToRemove = EditorState.SelectedText.Rows.Where(e => e.Equals(entry)).FirstOrDefault();
-                    EditorState.SelectedText.Rows.Remove(rowToRemove);
+                    var action = new RemoveTextRow(EditorState.SelectedText, index);
+                    Screen.EditorActionManager.ExecuteAction(action);
                 }
 
                 ImGui.EndPopup();
@@ -139,6 +143,21 @@ public class TextRowView
 
     public void Shortcuts()
     {
+        var selectedText = EditorState.SelectedText;
+        var selectedIndex = EditorState.SelectedTextRowIndex;
 
+        // Duplicate
+        if (EditorState.SelectedText != null && InputTracker.GetKeyDown(KeyBindings.Current.CORE_DuplicateSelectedEntry))
+        {
+            var action = new AddTextRow(selectedText, selectedIndex);
+            Screen.EditorActionManager.ExecuteAction(action);
+        }
+
+        // Remove
+        if (EditorState.SelectedText != null && InputTracker.GetKeyDown(KeyBindings.Current.CORE_DeleteSelectedEntry))
+        {
+            var action = new RemoveTextRow(selectedText, selectedIndex);
+            Screen.EditorActionManager.ExecuteAction(action);
+        }
     }
 }

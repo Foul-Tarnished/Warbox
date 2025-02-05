@@ -19,7 +19,9 @@ public class TextEditorState
     public DataStatus SelectedStatus;
     public XDocument SelectedDocument;
     public KCDText SelectedText;
+
     public KCDText.Row SelectedTextRow;
+    public int SelectedTextRowIndex = -1;
 
     public bool SelectNextText = false;
     public bool SelectNextTextRow = false;

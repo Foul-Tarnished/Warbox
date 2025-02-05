@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using static Assimp.Metadata;
 using System.Xml.Linq;
 using StudioCore.Core.Data;
+using System.Numerics;
+using System.Data.SqlTypes;
 
 namespace StudioCore.Editors.TextEditor;
 
@@ -38,14 +40,15 @@ public class FileSelectionView
 
             ImGui.BeginChild("fileListSection");
 
-            foreach (var entry in Warbox.DataHandler.Localization)
+            for(int i = 0; i < Warbox.DataHandler.Localization.Count; i++)
             {
+                var entry = Warbox.DataHandler.Localization.ElementAt(i);
                 var status = entry.Key;
                 var name = entry.Key.Name;
 
                 if (TextSearchFilters.FilterFileList(name, SearchText))
                 {
-                    SelectionRow(entry, status, name);
+                    SelectionRow(i, entry, status, name);
                 }
             }
 
@@ -55,9 +58,9 @@ public class FileSelectionView
         }
     }
 
-    private void SelectionRow(KeyValuePair<DataStatus, XDocument> entry, DataStatus status, string name)
+    private void SelectionRow(int index, KeyValuePair<DataStatus, XDocument> entry, DataStatus status, string name)
     {
-        if (ImGui.Selectable($"{name}##fileEntry{name}", EditorState.SelectedStatus == status))
+        if (ImGui.Selectable($"{name}##fileEntry{name}{index}", EditorState.SelectedStatus == status))
         {
             EditorState.UpdateSelection(entry);
         }
@@ -76,18 +79,9 @@ public class FileSelectionView
         // Context
         if (EditorState.SelectedStatus == status)
         {
-            if (ImGui.BeginPopupContextItem($"##fileEntryContext"))
+            if (ImGui.BeginPopupContextItem($"##fileEntryContext{index}"))
             {
-                // Create
-                if (ImGui.Selectable("Create"))
-                {
-                    var newStatus = new DataStatus("test", "test.xml");
-                    var newDoc = new XDocument(status);
-
-                    Warbox.DataHandler.Localization.Add(newStatus, newDoc);
-                    // TODO
-                }
-
+                CreateNewFile(index);
                 ImGui.EndPopup();
             }
         }
@@ -95,6 +89,53 @@ public class FileSelectionView
 
     public void Shortcuts()
     {
+    }
 
+    private string NewFileName = "";
+
+    private void CreateNewFile(int index)
+    {
+        ImGui.SetNextItemWidth(250f);
+        ImGui.InputText("##newFileName", ref NewFileName, 255);
+
+        var isValidName = true;
+
+        for (int i = 0; i < Warbox.DataHandler.Localization.Count; i++)
+        {
+            var entry = Warbox.DataHandler.Localization.ElementAt(i);
+            var status = entry.Key;
+            var name = entry.Key.Name;
+
+            if(NewFileName == name || NewFileName == "")
+            {
+                isValidName = false;
+            }
+        }
+
+        if (isValidName)
+        {
+            if (ImGui.Button("Create", new Vector2(250, 24)))
+            {
+                var xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Table>\r\n  <Row>\r\n    <Cell>blank</Cell>\r\n    <Cell></Cell>\r\n    <Cell></Cell>\r\n  </Row>\r\n</Table>";
+
+                var newStatus = new DataStatus($"{NewFileName}", $"{NewFileName}.xml");
+                newStatus.IsProjectData = true;
+
+                XDocument newDoc = XDocument.Parse(xmlString);
+
+                Warbox.DataHandler.Localization.Add(newStatus, newDoc);
+            }
+        }
+        else
+        {
+            ImGui.BeginDisabled();
+
+            if (ImGui.Button("Create", new Vector2(250, 24)))
+            {
+
+            }
+
+            ImGui.EndDisabled();
+        }
     }
 }
