@@ -1,1 +1,624 @@
-# player.soul
+#-----------------------------
+# self
+#-----------------------------
+# OnSpawn()
+
+# OnDestroy()
+
+# RegisterAI()
+
+#-----------------------------
+# entity
+#-----------------------------
+
+
+#-----------------------------
+# System
+#-----------------------------
+# CreateDownload()
+
+# LoadFont()
+
+# ExecuteCommand()
+
+# LogToConsole()
+
+# LogAlways()
+
+# ClearConsole()
+
+# Warning()
+
+# Error()
+
+# IsEditor()
+
+# IsEditing()
+
+# GetCurrTime()
+
+# GetCurrAsyncTime()
+
+# GetFrameTime()
+
+# GetLocalOSTime()
+
+# GetUserName()
+
+# DrawLabel()
+
+# GetEntity()
+
+# GetEntityClass()
+
+# PrepareEntityFromPool()
+
+# ReturnEntityToPool()
+
+# ResetPoolEntity()
+
+# GetEntities()
+
+# GetEntitiesInSphere()
+
+# GetEntitiesInSphereByClass()
+
+# GetPhysicalEntitiesInBox()
+
+# GetPhysicalEntitiesInBoxByClass()
+
+# GetEntitiesByClass()
+
+# GetNearestEntityByClass()
+
+# GetArchetypeProperties()
+
+# GetEntityByName()
+
+# GetNearestEntityByName()
+
+# GetEntityIdByName()
+
+# GetEntityByGUID()
+
+# GetEntityByTextGUID()
+
+# GetEntityPositionAndDirection()
+
+# DeformTerrain()
+
+# DeformTerrainUsingMat()
+
+# GetViewport()
+
+# ScreenToTexture()
+
+# DrawLine()
+
+# Draw2DLine()
+
+# DrawText()
+
+# SetGammaDelta()
+
+# ShowConsole()
+
+# CheckHeapValid()
+
+# GetConfigSpec()
+
+# IsMultiplayer()
+
+# SetPostProcessFxParam()
+
+# GetPostProcessFxParam()
+
+# SetScreenFx()
+
+# GetScreenFx()
+
+# SetCVar()
+
+# GetCVar()
+
+# AddCCommand()
+
+# SetScissor()
+
+# GetSystemMem()
+
+# IsHDRSupported()
+
+# SetBudget()
+
+# SetVolumetricFogModifiers()
+
+# SetWind()
+
+# GetWind()
+
+# GetSurfaceTypeIdByName(surfaceName)
+
+# SpawnEntity(params)
+
+# ActivateLight()
+
+# SetWaterVolumeOffset()
+
+# IsValidMapPos()
+
+# EnableMainView()
+
+# EnableOceanRendering()
+
+# ScanDirectory()
+
+# IsFileExist()
+
+# DebugStats()
+
+# ViewDistanceSet()
+
+# ViewDistanceGet()
+
+# ApplyForceToEnvironment()
+
+# GetOutdoorAmbientColor()
+
+# SetOutdoorAmbientColor()
+
+# GetTerrainElevation()
+
+# ActivatePortal()
+
+# DumpMMStats()
+
+# EnumDisplayFormats()
+
+# EnumAAFormats()
+
+# IsPointIndoors()
+
+# SetConsoleImage()
+
+# ProjectToScreen(point)
+
+# EnableHeatVision()
+
+# ShowDebugger()
+
+# DumpMemStats()
+
+# DumpMemoryCoverage()
+
+# ApplicationTest()
+
+# QuitInNSeconds()
+
+# DumpWinHeaps()
+
+# Break()
+
+# GetViewCameraFov()
+
+# IsPointVisible(point)
+
+# GetViewCameraPos()
+
+# GetViewCameraDir()
+
+# GetViewCameraUpDir()
+
+# GetViewCameraAngles()
+
+# RayWorldIntersection()
+
+# BrowseURL()
+
+# IsDevModeEnable()
+
+# RayTraceCheck()
+
+# ClearKeyState()
+
+# SetSunColor(vSunColor)
+
+# GetSunColor()
+
+# SetSkyColor(vSkyColor)
+
+# GetSkyColor()
+
+# SetSkyHighlight(tableSkyHighlightParams)
+
+# GetSkyHighlight()
+
+# LoadLocalizationXml(filename)
+
+# LoadTextFile(filename)
+
+# GetFrameID()
+
+#-----------------------------
+# soul
+#-----------------------------
+# GetId()
+
+# GetState(state)
+
+# GetStatLevel(stat)
+
+# GetStatProgres(stat)
+
+# AdvanceToStatLevel(stat, level)
+
+# AddStatXP(stat, xp)
+
+# GetNextLevelStatXP(stat, xp)
+
+# GetDerivedStat(derivedStat)
+
+# HaveSkill(skill)
+
+# GetSkillLevel(skill)
+
+# GetSkillProgress(skill)
+
+# HasAbility(ability)
+
+# AdvanceToSkillLevel(skill, level)
+
+# AddSkillXP(skill, xp)
+
+# GetNextLevelSkillXP(skill, level)
+
+# AddBuff(buff_id)
+
+# RemoveBuff(buff_instance)
+
+# RemoveAllBuffsByGuid(buff_guid)
+
+# AddPerk(perk_id)
+
+# RemovePerk(perk_id)
+
+# AddAllCodexPerk()
+
+# AddMetaRoleByName(name)
+
+# RemoveMetaRoleByName(name)
+
+# ModifyPlayerReputation(repChanceName,propagateToFaction)
+
+# GetRelationship(otherSoulWuid)
+
+# CalculateBarterDominance (shopkeeperSoulWuid)
+
+# IsInCombatDanger()
+
+# IsInCombatMode()
+
+# IsInTenseCircumstance()
+
+# GetNameStringId()
+
+# GetReadCaptionObjectText()
+
+# IsPublicEnemy()
+
+# IsLegalToLoot()
+
+# IsDialogRestricted()
+
+# GetMetaRoles()
+
+# GetSchedule()
+
+# GetSocialClass()
+
+# GetArchetype()
+
+# GetGender()
+
+# GetGatherMult()
+
+# GetFactionID()
+
+# HasScriptContext(contextName)
+
+# CanEatItem(itemClassIdDef)
+
+# EatItem(itemClassIdDef)
+
+#-----------------------------
+# actor
+#-----------------------------
+# RequestDialog(entityId, <str>, <bool>, <bool>)
+
+# CanTalk()
+
+# CanChat()
+
+# HasChatRequest()
+
+# HasAcceptedChat()
+
+# AcceptChatRequest()
+
+# DoChat(entityId, <bool>)
+
+# OpenChat(entityId)
+
+# IsWaitingForDialogueReply()
+
+# CanFollow()
+
+# StartFollow(entityId)
+
+# IsFollowing()
+
+# Revive(fromGameModeInit)
+
+# StandUp()
+
+# RagDollize()
+
+# PostPhysicalize()
+
+# GetLinkedEntity()
+
+# SetPhysicalizationProfile(profile)
+
+# GetPhysicalizationProfile(profile)
+
+# GetFrozenAmount
+
+# AddFrost(frost)
+
+# DumpActorInfo()
+
+# GetHeadPos()
+
+# GetHeadDir()
+
+# GetChannel()
+
+# IsPlayer()
+
+# IsLocalClient()
+
+# IsGhostPit()
+
+# IsFlying()
+
+# SetAngles()
+
+# PlayerSetViewAngles()
+
+# GetAngles()
+
+# VectorToLocal()
+
+# EnableAspect(aspects, enable)
+
+# SetExtensionActivation(extension, bActivate)
+
+# SetExtensionParams()
+
+# GetExtensionParams()
+
+# SetMovementControlledByAnimation(enable)
+
+# CanInteractWith(entityId)
+
+# SetHealth(health)
+
+# SetMaxHealth(health)
+
+# GetHealth()
+
+# IsUnconscious()
+
+# IsDead()
+
+# GetMaxHealth()
+
+# GetArmor()
+
+# GetMaxArmor()
+
+# ResetVulnerabilityEffects()
+
+# GetCurrentAnimationState()
+
+# TrackViewControlled()
+
+# ResetScores()
+
+# SetSearchBeam()
+
+# GetSpectatorMode()
+
+# SetLookIK(enable)
+
+# ClearForcedLookDir()
+
+# SetForcedLookObjectId(objectId)
+
+# ClearForcedLookObjectId()
+
+# SetDialogAnimationState(state)
+
+# CanStealthKill(victimEntityId)
+
+# CanStealthKnockout(victimEntityId)
+
+# RequestStealthKill(victimEntityId)
+
+# RequestKnockOut(victimEntityId)
+
+# IsCarryingCorpse()
+
+# CanGrabCorpse(victimEntityId)
+
+# RequestGrabCorpse(victimEntityId)
+
+# CanPutCorpse()
+
+# RequestPutCorpse()
+
+# CanHorsePullDown(victimEntityId)
+
+# RequestHorsePullDown(victimEntityId)
+
+# CanDoMercyKill(victimEntityId)
+
+# RequestMercyKill(victimEntityId)
+
+# CanHuntAttack(victimEntityId)
+
+# RequestHuntAttack(victimEntityId)
+
+# CanLoot(victimEntityId)
+
+# CanBeButchered()
+
+# IsPlayerInButcheringDistance()
+
+# EquipInventoryItem(itemId)
+
+# UnequipInventoryItem(itemId)
+
+# OpenItemSelectionFilter()
+
+# OpenItemMultiselectionFilter()
+
+# OpenItemSelectionSharpening(entityId)
+
+# EquipClothingPreset(presetGuid)
+
+# AddDirt(dirtDelta)
+
+# CleanDirt()
+
+# EquipWeaponPreset(presetGuid)
+
+# MakeLookAsSoul(sourceSoulGuid)
+
+# RequestItemExchange(entityId)
+
+# WashDirtAndBlood()
+
+# WashItems(maxCleaningEffect)
+
+# IsMoreDirty(dirtLevel)
+
+# IsBodyMoreDirty(dirtLevel)
+
+# AddBlood(bloodDelta)
+
+Constants:
+STANCE_ZEROG
+
+E_ACTORSTANCE_NORMAL
+E_ACTORSTANCE_COMBAT
+E_ACTORSTANCE_CROUCH
+E_ACTORSTANCE_CARRYCORPSE
+E_ACTORSTANCE_STONETHROWING
+E_ACTORSTANCE_INJURED
+
+SCRIPTBINDACTOR_OVERRIDE
+
+HAS_Enabled
+HAS_Undefined
+HAS_Disabled
+
+MKS_Undefined
+
+HPS_Disabled
+HPS_Enabled
+HPS_Undefined
+
+SAT_KillEnabled
+SAT_KnockoutEnabled
+SAT_KillDisabled
+SAT_KnockoutDisabled
+SAT_KillDisabledNoDagger
+
+#-----------------------------
+# human
+#-----------------------------
+# CanTalk()
+
+# CanInteractWith(entityId)
+
+# RequestDialog()
+
+# InterruptDialogs()
+
+# GetDialogRequestSourceName()
+
+# ToggleWeapon()
+
+# DrawWeapon()
+
+# HolsterWeapon()
+
+# IsWeaponDrawn()
+
+# ToggleWeaponSet()
+
+# GetTorchLightArchetype()
+
+# GrabOnLadder(ladderId)
+
+# IsOnLadder()
+
+# Mount(horseId)
+
+# Dismount()
+
+# DoBonding(horseId)
+
+# GetHorseMountPoint(horseId)
+
+# ForceMount(horseId)
+
+# ForceDismount()
+
+# StartReading(bookId)
+
+# GetItemInHand(handId)
+
+# StopAnim()
+
+# GetHorse()
+
+# IsMounted()
+
+# RequestPickpocketing(victimEntityId)
+
+# IsPickpocketing()
+
+Constants:
+EP_DISCARD
+EP_FOLD
+
+WS_PRIMARY
+WS_SECONDARY
+
+HS_LEFT
+HS_RIGHT
+
+PFT_COOK
+PFT_SMOKE
+PFT_DRY
+
+#-----------------------------
+# dog
+#-----------------------------
+# IsBondable()
+
+# CanBondNow()
+
+# Bond()

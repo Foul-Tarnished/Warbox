@@ -3,8 +3,10 @@
 #--------------------------------------------------------------
 # <name> <operation> <value>
 
+Operation: =, +, -, *, /, %
+
 #--------------------------------------------
-# Skills
+# Named
 #--------------------------------------------
 # Primary
 - strength
@@ -13,11 +15,15 @@
 - speech
 
 # States
-- charisma
-- courage
 - vision
+- hearing
+- baarter
+- courage
+- charisma
+- shadiness
 
 # Secondary
+- fencing (Warfare)
 - alchemy
 - craftsmanship
 - drinking
@@ -40,18 +46,94 @@
 - defense
 
 # Weapons
-- fencing (Warfare)
 - weapon_sword
 - heavy_weapons
-- weapon_shield
+- marksmanship
 - weapon_dagger
 - weapon_large
 - weapon_unarmed
-- marksmanship
+- weapon_shield
+
+# Misc
+- bard
+- cooking
+- fishing
+- mining
+- first_aid
+- tailoring
+- armourer
+- weaponsmithing
+- shoemaking
+- gunsmithing
+- bowyery
+- gambling
+- smithing_obsolete
+- pickpocketing_obsolete
+- herbalism_obsolete
+- weapon_mace_obsolete
+- weapon_bow_obsolete
+
+# Other
+- storyProgress
+- combatLevel
+- initialDirtiness
+
+# Distance
+- DistanceWalked
+- DistanceRan
+- DistanceSprinted
+- DistanceRidden
+- DistanceFastTraveled
+- DistanceTraveledWithPlayerOnBack
+- DeltaDistanceForXPAward
+- DeltaDistanceForShoeHealth
+- DeltaDistanceForHorseRidingXPAward
+- DeltaDistanceForClothingDirtying
+- DeltaDistanceForHorseEquipHealth
+- DeltaDistanceForEncumberanceXPAward
+- DeltaClothingDirtAccumulated
 
 #--------------------------------------------
-# Combat
+# Abbreviations
 #--------------------------------------------
+# Unknown
+- rch
+?
+
+- vib
+?
+
+- evi
+?
+
+- con
+?
+
+- mst
+?
+
+- mhs
+?
+
+- hlt
+?
+
+- sdt
+?
+
+- fov
+?
+
+- vir
+? 
+
+- tsr
+?
+
+- dtf
+? 
+
+# Combat
 - ssa
 Swing speed animation
 
@@ -127,9 +209,7 @@ Slow motion time
 - cli
 Clinch effectiveness
 
-#--------------------------------------------
 # States
-#--------------------------------------------
 - ifc
 Stolen status decay
 
@@ -148,9 +228,7 @@ Bed quality
 - cse
 Increase Charisma by X for each level of Strength
 
-#--------------------------------------------
 # Stealth
-#--------------------------------------------
 - sse
 Strength influence on Takedowns or Stealth kills
 
@@ -163,9 +241,7 @@ Noise made on movement
 - smi
 Smell 
 
-#--------------------------------------------
 # Character
-#--------------------------------------------
 - rms
 Movement speed
 
@@ -196,9 +272,7 @@ Bleed out interval
 - fdm
 Fall damage multiplier
 
-#--------------------------------------------
 # Dog
-#--------------------------------------------
 - drn
 Dog flee recovery duration
 
@@ -208,9 +282,7 @@ Dog find effect?
 - uat
 Dog attack damage
 
-#--------------------------------------------
 # Horse
-#--------------------------------------------
 - nrw
 Horse stamina recovery ?
 
@@ -220,9 +292,7 @@ Stamina consumption for horse
 - pdp
 Dismount difficulty for enemies (lower is better)
 
-#--------------------------------------------
 # Consumables
-#--------------------------------------------
 - itd
 Item spoil decay rate
 
@@ -235,18 +305,14 @@ Potency of healing potions
 - ahe
 HP gain on potion/alcohol consumption
 
-#--------------------------------------------
 # Crafting
-#--------------------------------------------
 - crp
 Craftsman repair price
 
 - rkm
 Repair kit multiplier
 
-#--------------------------------------------
 # Thieving
-#--------------------------------------------
 - pct
 Time gain during first pickpocket phase
 
@@ -271,24 +337,18 @@ Pickpocket detection chance
 - fac
 Guard stolen item find avoidance chance
 
-#--------------------------------------------
 # Drinking
-#--------------------------------------------
 - hod
 Hangover effect 1 ?
 
 - nhp
 Hangover effect 2 ?
 
-#--------------------------------------------
 # Survival
-#--------------------------------------------
 - hgs
 Gain strength XP on herb collection
 
-#--------------------------------------------
 # XP
-#--------------------------------------------
 - xsw
 XP gain in Sword
 
@@ -298,17 +358,10 @@ XP gain in Crafting
 - xsu
 XP gain in Survival
 
-#--------------------------------------------
 # Misc
-#--------------------------------------------
 - tdm
 Menacing related? multiplier
 
 - btw
 ? 
-
-#--------------------------------------------------------------
-# Operation
-#--------------------------------------------------------------
-=, +, -, *, /, %
 
