@@ -1,0 +1,690 @@
+#--------------------------------------------------------------
+# wh.rpgmodule.buff
+#--------------------------------------------------------------
+- Cpp:Animal
+?
+
+- Cpp:ArcheryStaminaBuff
+?
+
+- Cpp:BlacksmithingStaminaBuff
+?
+
+- Cpp:Bleeding
+Apply buff if player is bleeding
+
+- Cpp:Branding
+?
+
+- Cpp:SoulBuffInstance
+?
+
+- Cpp:Constant
+Apply constant buff
+
+- Cpp:Instant
+Apply instant buff
+
+- Cpp:ConstantContextChecking
+?
+
+- Cpp:BuffInstanceBase
+?
+
+- Cpp:TwoState
+?
+
+- Cpp:TwoStateWithActivation
+?
+
+- Cpp:Caffeine
+?
+
+- Cpp:CarryingLoad
+?
+
+- Cpp:CarryingBodyGravedigger
+?
+
+- Cpp:CombatContextBuff
+?
+
+- Cpp:CombatStaminaBuff
+?
+
+- Cpp:CombatTimeStacking
+?
+
+- Cpp:ActorIlluminanceMeter
+?
+
+- Cpp:AdditionalWeight
+?
+
+- Cpp:AgilityWeaponBuff
+?
+
+- Cpp:AlcoholCraving
+?
+
+- Cpp:Alcoholism
+?
+
+- Cpp:Alerted
+?
+
+- Cpp:Cooldown
+?
+
+- Cpp:CooldownOrInCombat
+?
+
+- Cpp:Crouch
+Apply buff when player is crouching
+
+- Cpp:Dashing
+?
+
+- Cpp:DialogSkillCheck
+Apply buff during skill check in dialog
+
+- Cpp:CrimeDialogSkillCheck
+?
+
+- Cpp:VersusWomanDialogSkillCheck
+?
+
+- Cpp:Drunk
+?
+
+- Cpp:DrunkOrHangoverChecking
+Apply buff when player is drunk or hungover
+
+- Cpp:DrunkChecking
+Apply buff if player is drunk
+
+- Cpp:Drunkenness
+?
+
+- Cpp:DuringFader
+?
+
+- Cpp:Educated
+?
+
+- Cpp:Encumbered
+?
+
+- Cpp:EquippableItemWeighted
+?
+
+- Cpp:ExteriorCrouch
+?
+
+- Cpp:Fading
+?
+
+- Cpp:WorldTimeFading
+?
+
+- Cpp:HealthFadingFromLimit
+Apply buff if HP is 75 or less, scaling buff by HP amount.
+
+- Cpp:HealthinessFading
+?
+
+- Cpp:AdditionalAttackerCountFading
+?
+
+- Cpp:AlcoholMood
+Apply buff when player has drank any alcohol
+
+- Cpp:SurvivalSkillFading
+?
+
+- Cpp:DirtinessFading
+?
+
+- Cpp:Exhausted
+?
+
+- Cpp:CountrysideLocation
+?
+
+- Cpp:CountrysideLocationWithObedientDogBuff
+?
+
+- Cpp:LowHealth
+?
+
+- Cpp:FastTravel
+?
+
+- Cpp:ConsumablePoisoning
+?
+
+- Cpp:FoodPoisoning
+?
+
+- Cpp:ForcedDrunkenness
+?
+
+- Cpp:Haggle
+?
+
+- Cpp:Hangover
+?
+
+- Cpp:HasDamagedWeapon
+?
+
+- Cpp:HasDamagedArmor
+?
+
+- Cpp:HasDogWithObedience
+Apply buff if dog is obedient
+
+- Cpp:UniversalHealth
+?
+
+- Cpp:FoodHealth
+?
+
+- Cpp:PotionHealth
+?
+
+- Cpp:HeavyWeapon
+Apply buff if player is using Heavy weapon
+
+- Cpp:HelmetOn
+?
+
+- Cpp:Horseman
+?
+
+- Cpp:InCombatDanger
+?
+
+- Cpp:Injured
+?
+
+- Cpp:InteriorCrouch
+?
+
+- Cpp:InteriorDrunk
+Apply buff if player is drunk and indoors
+
+- Cpp:IsBranded
+Apply buff if player is branded
+
+- Cpp:IsClean
+?
+
+- Cpp:IsItemStolen
+Apply buff if item is stolen
+
+- Cpp:IsItemStolenAndOwnerBranded
+Apply buff if item is stolen and player branded
+
+- Cpp:DocumentItemBuff
+?
+
+- Cpp:HerbItemBuff
+?
+
+- Cpp:MeleeWeaponBuff
+?
+
+- Cpp:ArtisanItemBuff
+?
+
+- Cpp:FinestGoodsItemBuf
+?
+
+- Cpp:AdeptOfMysticArtsItemBuff
+Apply buff if item is a potion, herb, recipe, book or alchemy related item
+
+- Cpp:ItemHealthChecking
+?
+
+- Cpp:ItemHealthMyItemChecking
+?
+
+- Cpp:RazorSharp
+?
+
+- Cpp:JailRecovery
+?
+
+- Cpp:LocationMonitorBuffBase
+?
+
+- Cpp:ForestLocation
+?
+
+- Cpp:SettlementLocation
+Apply buff if near human settlement
+
+- Cpp:Monk
+?
+
+- Cpp:Mounted
+Apply buff if player is mounted
+
+- Cpp:SpitefulCreature
+?
+
+- Cpp:MountedReloading
+?
+
+- Cpp:MyItemChecking
+?
+
+- Cpp:NoRestForTheWicked
+Apply buff if horse is almost out of stamina
+
+- Cpp:Night
+Apply buff at night.
+
+- Cpp:NonHealingPotionFading
+?
+
+- Cpp:NonHealingPotionBasicTimed
+?
+
+- Cpp:MoraleContext
+?
+
+- Cpp:NonHealingPotionAnimal
+?
+
+- Cpp:NonHealingPotionNonReward
+?
+
+- Cpp:Npc
+?
+
+- Cpp:NonReward
+?
+
+- Cpp:OneHandedAnyWeapon
+?
+
+- Cpp:SameWeaponClassAsOpponent
+Apply buff if weapon is the same class as opponent
+
+- Cpp:SameWeaponSubClassAsOpponent
+Apply buff if weapon is the same sub-class as opponent
+
+- Cpp:Overread
+?
+
+- Cpp:Overeat
+?
+
+- Cpp:Oversleep
+?
+
+- Cpp:ChainStrikePolearm
+?
+
+- Cpp:ChainStrikeHeavyWeapon
+?
+
+- Cpp:ChainStrikeUnarmed
+Apply buff if attack is part of an unbroken sequence of blows.
+
+- Cpp:ChainStrikeSword
+?
+
+- Cpp:CrimeLevelInvestigating
+Apply buff if player is wanted for a crime.
+
+- Cpp:FirstStrike
+?
+
+- Cpp:EagleEye
+Apply buff if player is aiming with bow / crossbow
+
+- Cpp:FuckShitUp
+Apply buff after first strike in unarmed combat.
+
+- Cpp:FrighteningPresence
+?
+
+- Cpp:Gladiator
+?
+
+- Cpp:GhillieSuit
+Apply buff if player is in a forest.
+
+- Cpp:LightArmor
+?
+
+- Cpp:HeavyArmor
+?
+
+- Cpp:HenryShotFirst
+Apply buff if ranged attack is the first shot in combat
+
+- Cpp:OwnedDog
+?
+
+- Cpp:Perfume
+?
+
+- Cpp:BalancedDiet
+?
+
+- Cpp:BiggerTheyAreHarderTheyFall
+Apply buff if unarmed against opponent with weapon
+
+- Cpp:BlackArtsApprentice
+?
+
+- Cpp:BordererSprint
+Apply buff after 10 seconds of fast sprinting (Ranger Run)
+
+- Cpp:BloodRush
+?
+
+- Cpp:KnightInAShiningArmor
+Apply buff if player is wearing plate armour
+
+- Cpp:LastGaspShortTerm
+?
+
+- Cpp:LastGaspLongTerm
+?
+
+- Cpp:LetEmCome
+?
+
+- Cpp:LocalReputationBuffBase
+?
+
+- Cpp:LocalHeroInfamousSwitch
+?
+
+- Cpp:Infamous
+?
+
+- Cpp:LocalHero
+Apply buff in locations where player has good reputation
+
+- Cpp:Lowborn
+?
+
+- Cpp:Highborn
+?
+
+- Cpp:ManlyOdourStealth
+?
+
+- Cpp:ManlyOdourWoman
+?
+
+- Cpp:CreativeSoul
+Apply buff (Energy recovery) when doing Alchemy, Sharpening, Blacksmithing or Dice-playing. 
+
+- Cpp:Lockpicking
+Apply buff if player is in the lockpicking minigame.
+
+- Cpp:Blacksmithing
+Apply buff if player is in the blacksmithing minigame.
+
+- Cpp:Alchemy
+Apply buff if player is in the alchemy minigame.
+
+- Cpp:Pickpocketing
+Apply buff if player is in the pickpocketing minigame.
+
+- Cpp:NeverSurrender
+Apply buff if player drops below 25 HP
+
+- Cpp:MountainPerk
+?
+
+- Cpp:OneShotAtGlory
+?
+
+- Cpp:PreciseStrike
+Apply buff if sword attack is fully charged.
+
+- Cpp:Pacifist
+?
+
+- Cpp:Rage
+?
+
+- Cpp:PurpleHaze
+?
+
+- Cpp:RiverPerk
+?
+
+- Cpp:Revenant
+?
+
+- Cpp:Shieldbreaker
+Apply buff to enemy weapons
+
+- Cpp:Sadist
+?
+
+- Cpp:SteadyAim
+Apply buff if player took time to aim properly
+
+- Cpp:Skirmishe
+?
+
+- Cpp:TireEmToTakeEm
+?
+
+- Cpp:ThunderousBlast
+Apply buff on firearms shot
+
+- Cpp:TotallyLegit
+Apply buff to stolen status
+
+- Cpp:Onslaught
+?
+
+- Cpp:MagisterDimicator
+?
+
+- Cpp:UndauntedCavalier
+?
+
+- Cpp:GreenKnight
+?
+
+- Cpp:WellWorn
+?
+
+- Cpp:Warmonger
+Apply buff if recently in combat.
+
+- Cpp:PerkFlowerPower
+?
+
+- Cpp:PlayerDogObedienceNotification
+?
+
+- Cpp:PerkHorsenip
+?
+
+- Cpp:MountedPlayerBuff
+?
+
+- Cpp:PlayerHorseStaminaBuff
+?
+
+- Cpp:PoacherTrail
+?
+
+- Cpp:PoisoningWorldTimeTimed
+?
+
+- Cpp:PoisoningBasicTimed
+?
+
+- Cpp:PlayerDogTiredNotification
+?
+
+- Cpp:ReadingCartographer
+?
+
+- Cpp:ReadingQuality
+?
+
+- Cpp:Respec
+?
+
+- Cpp:RiddenHorse
+?
+
+- Cpp:OnRoad
+?
+
+- Cpp:SharpeningPressure
+?
+
+- Cpp:OffRoad
+Apply buff if player is off-road (on horse)
+
+- Cpp:Polearm
+Apply buff when player is using Polearm weapon
+
+- Cpp:QuestCartTag
+?
+
+- Cpp:Still
+Apply buff when player is standing still
+
+- Cpp:Starvation
+?
+
+- Cpp:StillAndHidden
+?
+
+- Cpp:StrengthWeaponBuff
+?
+
+- Cpp:StomachPain
+?
+
+- Cpp:Sword
+Apply buff when player is using Sword weapon
+
+- Cpp:TwoHandedSword
+?
+
+- Cpp:OneHandedSwordShieldAllowed
+?
+
+- Cpp:TestRealSpeed
+?
+
+- Cpp:HuntingSword
+?
+
+- Cpp:WorldTimeTimed
+?
+
+- Cpp:BasicTimed
+Apply timed buff
+
+- Cpp:TipplerPotion
+?
+
+- Cpp:ModifiableTimed
+?
+
+- Cpp:Unarmed
+?
+
+- Cpp:UntilCombatEnds
+?
+
+- Cpp:Unconscious
+?
+
+- Cpp:VersusDog
+?
+
+- Cpp:UntilUnconsciousnessEnds
+?
+
+- Cpp:VersusWoman
+Apply buff if the target (in conversation or combat) is a woman
+
+- Cpp:VersusAnimal
+?
+
+- Cpp:VersusCuman
+?
+
+- Cpp:VersusMan
+?
+
+- Cpp:VersusEnemy
+?
+
+- Cpp:VersusSoldier
+?
+
+- Cpp:Wanted
+?
+
+- Cpp:Void
+None
+
+- Cpp:ShoeRepairkit
+Apply buff if item is a shoe being repaired
+
+- Cpp:ShieldAndArmorBuff
+?
+
+- Cpp:ShortTermFood
+?
+
+- Cpp:SimpleDrunkenness
+?
+
+- Cpp:Sick
+?
+
+- Cpp:Sleep
+?
+
+- Cpp:Sitting
+?
+
+- Cpp:SleepImproved
+?
+
+- Cpp:Sniffing
+?
+
+- Cpp:Smell
+?
+
+- Cpp:WeaponHealthIntensity
+?
+
+- Cpp:Thunderstorm
+?
+
+- Cpp:WhileSleeping
+?
+
+- Cpp:WithCoveredFace
+?
+
+- Cpp:WithPlatingArmor
+?
+
+- WithoutPlatingArmor
+?
+
