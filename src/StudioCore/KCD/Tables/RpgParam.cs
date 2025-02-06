@@ -6,25 +6,25 @@ using System.IO;
 namespace StudioCore.KCD.Tables;
 
 [XmlRoot("database", Namespace = "", IsNullable = false)]
-public class Database
+public class RpgParam : IKCDTable
 {
     [XmlAttribute("name")]
     public string Name { get; set; }
 
     [XmlElement("rpg_params")]
-    public RpgParams RpgParams { get; set; }
+    public RpgParamHeader RpgParams { get; set; }
 }
 
-public class RpgParams
+public class RpgParamHeader
 {
     [XmlAttribute("version")]
     public int Version { get; set; }
 
     [XmlElement("rpg_param")]
-    public List<RpgParam> RpgParamList { get; set; } = new();
+    public List<RpgParamEntry> RpgParamList { get; set; } = new();
 }
 
-public class RpgParam
+public class RpgParamEntry
 {
     [XmlAttribute("rpg_param_key")]
     public string Key { get; set; }

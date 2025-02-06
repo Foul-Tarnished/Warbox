@@ -58,7 +58,7 @@ public class DataHandler
                     var pDataStatus = pEntry.Key;
 
                     // Is match for existing file, override
-                    if (bDataStatus.Name == pDataStatus.Name)
+                    if (bDataStatus.Name == pDataStatus.Name || pDataStatus.Name.Contains(bDataStatus.Name) && pDataStatus.Name.Contains("__"))
                     {
                         hasProjectVersion = true;
 
@@ -66,6 +66,14 @@ public class DataHandler
                         if(finalData.ContainsKey(pEntry.Key))
                         {
                             finalData[pEntry.Key] = pEntry.Value;
+                        }
+                        else
+                        {
+                            if(pDataStatus.Name.Contains(bDataStatus.Name) && 
+                                pDataStatus.Name.Contains("__"))
+                            {
+                                finalData.Add(pDataStatus, pEntry.Value);
+                            }
                         }
                     }
                     // Is unique to project, new file

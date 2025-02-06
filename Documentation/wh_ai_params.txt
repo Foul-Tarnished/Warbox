@@ -1,0 +1,17 @@
+- ai_VisionMapNumberOfPVSUpdatesPerFrame
+
+- ai_DebugDrawVisionMapObservables
+
+- wh_ai_PathStraightForDashCheckDistance
+
+- wh_ai_CollisionAvoidanceObstacleTravel
+
+- wh_ai_TurnTowardsPositionTimeout
+
+- wh_ai_LimitSpeedAboveWalkEnabled
+
+- wh_ai_findBestPath_radius
+
+- wh_ai_findBestPath_offsetFraction
+
+- wh_ai_findBestpath_useHeuristicInDetourTagpointss

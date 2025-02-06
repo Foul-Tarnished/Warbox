@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using StudioCore.Configuration;
 using StudioCore.Editor;
+using StudioCore.Editors.TableEditor;
 using StudioCore.Graphics;
 using StudioCore.Interface;
 using StudioCore.TextEditor;
@@ -19,16 +20,19 @@ public class EditorHandler
     public EditorScreen FocusedEditor;
 
     public TextEditorScreen TextEditor;
+    public TableEditorScreen TableEditor;
 
     public EditorHandler(IGraphicsContext _context)
     {
         TextEditor  = new TextEditorScreen(_context.Window, _context.Device);
+        TableEditor = new TableEditorScreen(_context.Window, _context.Device);
 
         EditorList = [
+            TableEditor,
             TextEditor
         ];
 
-        FocusedEditor = TextEditor;
+        FocusedEditor = TableEditor;
     }
 
     public void UpdateEditors()

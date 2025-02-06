@@ -8,6 +8,24 @@ namespace StudioCore.Editors.TextEditor;
 
 public static class TextSearchFilters
 {
+    public static bool FilterTableKey(string name, string input)
+    {
+        var preppedName = name.ToLower().Trim();
+        var preppedInput = input.ToLower().Trim();
+
+        if (input == "")
+            return true;
+
+        var isValid = false;
+
+        if (preppedName.Contains(preppedInput))
+        {
+            isValid = true;
+        }
+
+        return isValid;
+    }
+
     public static bool FilterFileList(string name, string input)
     {
         var preppedName = name.ToLower().Trim();

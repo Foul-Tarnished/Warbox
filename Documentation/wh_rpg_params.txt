@@ -1,0 +1,365 @@
+- wh_rpg_DebugSoulsFilter
+Name of soul to show in DebugSouls
+
+- wh_rpg_DebugSoulsDistance
+Max distance from the player to show in DebugSouls [m]
+
+- wh_rpg_DebugSouls
+Shows rpg debug info for all nearby souls, the value is a bitmask controlling the display of particular info possible bits:
+ 1 - name, health, stamina
+ 2 - stats
+ 4 - state flags, selected derived stats
+ 8 - skills
+ 16 - counters
+ 32 - abilities and buffs
+ 64 - roles
+ 128 - meta roles
+ 256 - life/death state details
+ 512 - reputation (relation includes inter-tree links)
+ 1024 - perks and perk points
+ 2048 - combat
+ 4096 - static data
+ 8192 - companions
+ 16384 - combat history
+ 32768 - dirt & blood
+ 65536 - body description
+ 
+- wh_storm_RefreshAll
+Loads storm program from disk and runs it on all souls.
+
+- wh_storm_RefreshSoul
+Loads storm program from disk and runs it on given soul.
+
+- wh_storm_DebugSoul
+Name of soul to show in storm debug
+
+- wh_rpg_DebugSoulsStringFilter
+#
+
+- wh_storm_ProgramLocation
+Libs\\Storm\\storm.xml
+Location from where load storm program
+
+- wh_storm_DebugSubstringFilter
+Filter storm debug by substring
+
+- wh_storm_DebugOperationTypeFilter
+Filter storm debug by task class
+
+- wh_storm_RunTask
+1= Telemetry errors will appear when connection issues happen and Game will be terminated. wh_rpg_LogTarget must be set to 1
+
+- wh_rpg_TelemetryRetryDelay
+Delay between retry attempts when sending telemetry failed [ms]
+
+- wh_rpg_TelemetryMaxRetryCount
+Maximum number of retry attempts when sending telemetry failed
+
+- wh_rpg_TelemetryServer
+Address of the telemetry load balancing server.
+
+- wh_rpg_LogFilepath
+#
+
+- wh_rpg_TelemetrySpamFiltering
+0=Log all events, respecting E_LogLevel.
+1=Selected frequent events are hard-filtered.
+Set from the UI, Saved in the profile
+0=Publisher/Developer (false) cannot use telemetry data for marketing1=Publisher/Developer (true)  can use telemetry data for marketing.
+
+- wh_rpg_TelemetryLimitedToPlayer
+0=Telemetry logging for all events
+1=Telemetry logging only for events affected by player
+
+- wh_rpg_TelemetryLimitedToPlayline
+0=Telemetry enabled on all playlines
+1-7=Telemetry enabled only on selected playline
+
+- wh_rpg_TelemetryEnforced
+#
+
+- wh_rpg_ProfilingLogSmoothingFactor
+Exponential smoothing factor. Value from 0 to 1. 1 -> disables smoothing.
+
+- wh_rpg_ProfilingLog
+1 = Log basic profiling data (like CPU and GPU frame times).
+
+- wh_rpg_TelemetryPlaionSendStats
+Sends RPG statistics/counters to Plaion telemetry. Only works if Plaion telemetry is enabled
+
+- wh_rpg_TelemetryPlaionEnable
+-1=Disable and free memory, 0=Disable , 1 = Enable (same as E_TelemetryPlaionEnable)
+
+- wh_rpg_discoverLocation
+Discover a named RPG location.
+
+- wh_rpg_undiscoverAll
+Undiscover all POI and locations.
+
+- wh_rpg_skill
+Dump all player's skills.
+
+- wh_rpg_ProfilingLogInterval
+How often we send the profiling data [seconds].
+
+- wh_rpg_FlushEventLog
+#
+
+- wh_rpg_ResetLogging
+Resets event logging. You have to Reset after changing logging settings!
+
+- wh_rpg_IgnoreStaticBedPOI
+Bed POI in static level data are not loaded.
+
+- wh_rpg_countFastTravelPoints
+Returns number of fast travel points
+
+- wh_rpg_ReputationOverride
+All rpg reputations (anything vs. player) are overriden to this value
+
+- wh_rpg_EnableReputationOverride
+Enable global reputation override
+
+- wh_rpg_DebugAlcohol
+Shows rpg debug for alcohol the value is a bitmask controlling the display of particular info possible bits:
+1 - drunkenees
+
+- wh_rpg_ResetStatistics
+#
+
+- wh_rpg_ContextOverride_Health
+Override ID of the health RPG context.
+
+- wh_rpg_ActorIlluminanceIntervalEndpoints
+0.001 0.002
+Thresholds for player illuminance estimation buff ActorIlluminanceMeter. 
+Space separated endpoints, number of intervals is the number of floats in this cvar + 1.
+The number of intervals must match the numbef of modifier groups in the buff.
+
+- wh_rpg_PerceptionPriorRelationshipFuncType
+Change behaviour of relationship while computing perception priority.
+0 - KCD style, only multiplying constants apply
+1 - new style including bonus to neutral and enemy relationship
+
+- wh_rpg_ReputationLogMaxSize
+#
+
+- wh_rpg_CorpseDisappearAddedDelay
+If corpse is supposed to be despawned but is not because player is too close, despawn is delayed by this many milliseconds.
+
+- wh_rpg_AutoReloadRoles
+Controls whether roles table should be automatically reloaded when roles file is modified
+
+- wh_rpg_ContextOverride_BodyPart
+Override ID of the bodypart RPG context.
+
+- wh_rpg_ContextOverride_SkillLevelRelative
+Override ID of the skill RPG context as relative skill level <0;1>.
+
+- wh_rpg_SkipTimersOn
+Disable all RPG timers on soul(s) with given name; _all_ stands for all existing souls
+
+- wh_rpg_SkipEffectsOn
+Disable all RPG effects on soul(s) with given name; _all_ stands for all existing souls
+
+- wh_rpg_DebugFactionId
+Shows debug for factions of Id
+
+- wh_rpg_DebugFactions
+Shows rpg debug for factions, the value is a bitmask controlling the display of particular info, possible bits:
+1 - show factions with queued reputations
+
+- wh_rpg_SkipFoodTimers
+disable all food-related timers (like starvation)
+
+- wh_rpg_OneShotKill
+One shot kill (every, even small, hit is lethal).
+
+- wh_rpg_reload
+Reloads all rpg tables.
+
+- wh_rpg_SkipAll
+Disable all rpg effects and timers on all souls. Works bad when put in system.cfg.
+
+- wh_rpg_ParallelUpdate
+execute rpg update in a async job
+
+- wh_rpg_SchedulerUpdate
+1 - use soul priorities, 0 - naive update for each soul
+
+- wh_rpg_LockOnAllTargets
+all souls are treated as enemies during the combat locking
+
+- wh_rpg_UnlockAll
+unlock all abilities
+
+- wh_rpg_SchedulerBudgetPerLayer
+number of updated souls in each layer
+
+- wh_rpg_SchedulerSoulsInLayer0
+souls in the first layer, second contains twice the count
+
+- wh_rpg_SchedulerSortIterations
+number of bubble sort iterations per frame
+
+- wh_rpg_SchedulerDebug
+set to non-zero to debug draw the state of the scheduler, 1 - per layer debug, 2 - sorted jobs
+
+- wh_rpg_UnlockAllAchievements
+Unlocks all achievements.
+
+- wh_rpg_AchievementsDebug
+set to non-zero to debug draw the achievements
+
+- wh_rpg_StatisticsDebug
+set to non-zero to debug draw the statistics
+
+- wh_rpg_MaxSoulUpdateDelta
+max update delta time, all above will be clamped [s]
+
+- wh_rpg_LogTarget
+0=Logging disabled, 1=Log to Server, 2=Log to File, 3=Log to Both (same as E_LogTarget
+
+- wh_rpg_CombatHistoryExpirationTime
+Expiration time for combat history. After that time history is discarded.
+
+- wh_rpg_GameTimeRatioOn
+1 - Enable game time ratio in skiptime
+
+- wh_rpg_UnlockAchievement
+param = ID of achievment to unlock
+
+- wh_rpg_LogSize
+Preferred size of a log file (bytes). The saved file may be a bit larger because the last event has to be closed properly.
+
+- wh_rpg_LogReasons
+0=Disable logging Reasons, 1=Enable logging Reasons
+
+- wh_rpg_LogType
+0=Log GUIDs, 1=Log names, 2=Log both (same as E_LogType)
+
+- wh_rpg_LogLevel
+0=Log All events, 1=Log Combat events (same as E_LogLevel)
+
+- wh_rpg_LogInterval
+Interval between saving logs to file (seconds)
+
+- wh_rpg_EventLogDebug
+0=Debug disabled, 1=Debug enabled, 2=Enabled with reduced text
+
+- wh_rpg_LogCompression
+Log compression level: 0=No compression, 1=Best speed, 9=Best compression, -1=Default compression (6)
+
+- wh_rpg_WeaponChangePriorityBoostPeriod
+
+- wh_rpg_WeaponChangePriorityBoost
+
+- wh_rpg_MoveMaxBiasAngleSatisfied
+
+- wh_rpg_SkirmishDebugLog
+
+- wh_rpg_ReputationWeight
+
+- wh_rpg_MoveIgnoreEnemies
+
+- wh_rpg_SkirmishDebugDraw
+
+- wh_rpg_TargetingMeWeight
+
+- wh_rpg_BarkingMaxDistance
+
+- wh_rpg_BarkingSoulCooldown
+
+- wh_rpg_TargetProblemPeriod
+
+- wh_rpg_MinPriorityDistance
+
+- wh_rpg_MaxPriorityDistance
+
+- wh_rpg_skirmishTriggerEvent
+
+- wh_rpg_MoveEnabledMinAllies
+
+- wh_rpg_BarkExpirationPeriod
+
+- wh_rpg_BarkingGuardCooldown
+
+- wh_rpg_MoraleSpreadDistance
+
+- wh_rpg_MoveCutAngleFromPoint
+
+- wh_rpg_BarkingGlobalCooldown
+
+- wh_rpg_VirtualSkirmishRadius
+
+- wh_rpg_BattleShooterMaxAngle
+
+- wh_rpg_TargetingFleePriority
+
+- wh_rpg_TargetAttackersWeight
+
+- wh_rpg_TargetingOthersWeight
+
+- wh_rpg_SkirmishMergeDistance
+
+- wh_rpg_TargetingHumanPriority
+
+- wh_rpg_DistancePriorityWeight
+
+- wh_rpg_MoveDetailedDebugEntity
+
+- wh_rpg_SkirmishDebugDrawFilter
+
+- wh_rpg_BarkingGuardCooldownVar
+
+- wh_rpg_LastPlayerHitBoostWeight
+
+- wh_rpg_BattleShooterAngleWeight
+
+- wh_rpg_BattleShooterMaxDistance
+
+- wh_rpg_TargetProblemPriorityDebuf
+
+- wh_rpg_discover
+
+- wh_rpg_removePOI
+Remove procedural POI.
+
+- wh_rpg_discoverAll
+Discover all POI
+
+- wh_rpg_discoverPOI
+
+- wh_rpg_getLocation
+Get current RPG location.
+
+- wh_rpg_dumpLocations
+Dump all RPG locations.
+
+- wh_rpg_resetLocations
+Reset all RPG locations.
+
+- wh_rpg_FollowDrainHorseStamina
+Should the horse's stamina be drained (during dash) when it is in follow?
+
+- wh_rpg_LocationReputationCacheExpirationTime
+Maximal age of location reputation cache. Value is in seconds
+
+- wh_rpg_IndulgencePriceCacheExpirationTime
+Maximal age of indulgance price cache. Value is in seconds
+
+- wh_rpg_ItemFullHealthByDefault
+All items will be at full health and quality by default (if not configured).
+
+- wh_rpg_resetFactions
+
+- wh_rpg_angriness
+
+- wh_rpg_f2fRelations
+
+- wh_rpg_p2fRelations
+
+- wh_pl_hit
+
+- wh_rpg_FollowDrainRiderStamina
+Should the rider's stamina be drained (during dash) when it is in follow?

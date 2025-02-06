@@ -16,7 +16,7 @@ public static class XmlHelper
     {
         string xmlPath = "rpg_params.xml";
         XDocument doc = XDocument.Load(xmlPath);
-        Database db = DeserializeFromXDocument<Database>(doc);
+        RpgParam db = DeserializeFromXDocument<RpgParam>(doc);
 
         Console.WriteLine($"Database Name: {db.Name}, Version: {db.RpgParams.Version}");
 

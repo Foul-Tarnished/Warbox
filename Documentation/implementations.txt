@@ -1,0 +1,143 @@
+#--------------------------------------------------------------
+# Implementations
+#--------------------------------------------------------------
+- Cpp:Void
+None
+
+- Cpp:Constant
+Apply constant buff
+
+- Cpp:BasicTimed
+Apply timed buff
+
+- Cpp:Sword
+Apply buff when player is using Sword weapon
+
+- Cpp:Polearm
+Apply buff when player is using Polearm weapon
+
+- Cpp:HeavyWeapon
+Apply buff if player is using Heavy weapon
+
+- Cpp:DrunkOrHangoverChecking
+Apply buff when player is drunk or hungover
+
+- Cpp:Shieldbreaker
+Apply buff to enemy weapons
+
+- Cpp:TotallyLegit
+Apply buff to stolen status
+
+- Cpp:Still
+Apply buff when player is standing still
+
+- Cpp:AlcoholMood
+Apply buff when player has drank any alcohol
+
+- Cpp:LocalHero
+Apply buff in locations where player has good reputation
+
+- Cpp:Mounted
+Apply buff if player is mounted
+
+- Cpp:SettlementLocation
+Apply buff if near human settlement
+
+- Cpp:IsItemStolenAndOwnerBranded
+Apply buff if item is stolen and player branded
+
+- Cpp:VersusWoman
+Apply buff if the target (in conversation or combat) is a woman
+
+- Cpp:NoRestForTheWicked
+Apply buff if horse is almost out of stamina
+
+- Cpp:FuckShitUp
+Apply buff after first strike in unarmed combat.
+
+- Cpp:Crouch
+Apply buff when player is crouching
+
+- Cpp:IsBranded
+Apply buff if player is branded
+
+- Cpp:OffRoad
+Apply buff if player is off-road (on horse)
+
+- Cpp:Night
+Apply buff at night.
+
+- Cpp:BordererSprint
+Apply buff after 10 seconds of fast sprinting (Ranger Run)
+
+- Cpp:ThunderousBlast
+Apply buff on firearms shot
+
+- Cpp:CreativeSoul
+Apply buff (Energy recovery) when doing Alchemy, Sharpening, Blacksmithing or Dice-playing. 
+
+- Cpp:SameWeaponClassAsOpponent
+Apply buff if weapon is the same class as opponent
+
+- Cpp:SameWeaponSubClassAsOpponent
+Apply buff if weapon is the same sub-class as opponent
+
+- Cpp:Warmonger
+Apply buff if recently in combat.
+
+- Cpp:ChainStrikeUnarmed
+Apply buff if attack is part of an unbroken sequence of blows.
+
+- Cpp:AdeptOfMysticArtsItemBuff
+Apply buff if item is a potion, herb, recipe, book or alchemy related item
+
+- Cpp:KnightInAShiningArmor
+Apply buff if player is wearing plate armour
+
+- Cpp:InteriorDrunk
+Apply buff if player is drunk and indoors
+
+- Cpp:SteadyAim
+Apply buff if player took time to aim properly
+
+- Cpp:Bleeding
+Apply buff if player is bleeding
+
+- Cpp:ShoeRepairkit
+Apply buff if item is a shoe being repaired
+
+- Cpp:NeverSurrender
+Apply buff if player drops below 25 HP
+
+- Cpp:DialogSkillCheck
+Apply buff during skill check in dialog
+
+- Cpp:BiggerTheyAreHarderTheyFall
+Apply buff if unarmed against opponent with weapon
+
+- Cpp:HasDogWithObedience
+Apply buff if dog is obedient
+
+- Cpp:HenryShotFirst
+Apply buff if ranged attack is the first shot in combat
+
+- Cpp:HealthFadingFromLimit
+Apply buff if HP is 75 or less, scaling buff by HP amount.
+
+- Cpp:DrunkChecking
+Apply buff if player is drunk
+
+- Cpp:Blacksmithing
+Apply buff if player is using the blacksmithing furniture.
+
+- Cpp:EagleEye
+Apply buff if player is aiming with bow / crossbow
+
+- Cpp:CrimeLevelInvestigating
+Apply buff if player is wanted for a crime.
+
+- Cpp:GhillieSuit
+Apply buff if player is in a forest.
+
+- Cpp:PreciseStrike
+Apply buff if sword attack is fully charged.
