@@ -1,7 +1,397 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <database>
 	<tables>
-		<entry Name="rpg_param" ImGuiName="rpg_param" ListKey="rpg_param" AliasKey="rpg_param_value" RowKey="rpg_param_key" />
-		<entry Name="buff" ImGuiName="buff" ListKey="buff" AliasKey="buff_name" RowKey="buff_id" />
+        <!-- Achievement -->
+		<entry Category="RPG"
+        Name="achievement" ImGuiName="achievement" ListKey="achievement" AliasKey="achievement_name" RowKey="achievement_id" />
+        
+        <!-- Angriness Enum -->
+		<entry Category="RPG"
+        Name="angriness_enum" ImGuiName="angriness_enum" ListKey="angriness_enum" AliasKey="name" RowKey="angriness_enum_id" />
+        
+        <!-- Angriness Flag -->
+		<entry Category="RPG"
+        Name="angriness_flag" ImGuiName="angriness_flag" ListKey="angriness_flag" AliasKey="interval" RowKey="name" />
+        
+        <!-- Angriness Type -->
+		<entry Category="RPG"
+        Name="angriness_type" ImGuiName="angriness_type" ListKey="angriness_type" AliasKey="" RowKey="name" />
+        
+        <!-- Buff -->
+		<entry Category="RPG"
+        Name="buff" ImGuiName="buff" ListKey="buff" AliasKey="buff_name" RowKey="buff_id" />
+        
+        <!-- Buff AI Tag -->
+		<entry Category="RPG"
+        Name="buff_ai_tag" ImGuiName="buff_ai_tag" ListKey="buff_ai_tag" AliasKey="buff_ai_tag_name" RowKey="buff_ai_tag_id" />
+        
+        <!-- Buff Classes -->
+		<entry Category="RPG"
+        Name="buff_class" ImGuiName="buff_class" ListKey="buff_class" AliasKey="buff_class_name" RowKey="buff_class_id" />
+        
+        <!-- Buff Exclusivity -->
+		<entry Category="RPG"
+        Name="buff_exclusivity" ImGuiName="buff_exclusivity" ListKey="buff_exclusivity" AliasKey="buff_exclusivity_name" RowKey="buff_exclusivity_id" />
+        
+        <!-- Buff Family -->
+		<entry Category="RPG"
+        Name="buff_family" ImGuiName="buff_family" ListKey="buff_family" AliasKey="buff_family_name" RowKey="buff_family_id" />
+        
+        <!-- Buff Implementation -->
+		<entry Category="RPG"
+        Name="buff_implementation" ImGuiName="buff_implementation" ListKey="buff_implementation" AliasKey="" RowKey="buff_implementation_name" />
+        
+        <!-- Buff Lifetime -->
+		<entry Category="RPG"
+        Name="buff_lifetime" ImGuiName="buff_lifetime" ListKey="buff_lifetime" AliasKey="buff_lifetime_name" RowKey="buff_lifetime_id" />
+        
+        <!-- Buff UI Type -->
+		<entry Category="RPG"
+        Name="buff_ui_type" ImGuiName="buff_ui_type" ListKey="buff_ui_type" AliasKey="buff_ui_type_name" RowKey="buff_ui_type_id" />
+        
+        <!-- Buff UI Visibility -->
+		<entry Category="RPG"
+        Name="buff_ui_visibility" ImGuiName="buff_ui_visibility" ListKey="buff_ui_visibility" AliasKey="buff_ui_visibility_name" RowKey="buff_ui_visibility_id" />
+        
+        <!-- Combat Shout Type  -->
+		<entry Category="RPG"
+        Name="combat_shout_type" ImGuiName="combat_shout_type" ListKey="combat_shout_type" AliasKey="" RowKey="combat_shout_type_name" />
+        
+        <!-- Companion Type -->
+		<entry Category="RPG"
+        Name="companion_type" ImGuiName="companion_type" ListKey="companion_type" AliasKey="companion_type_name" RowKey="companion_type_id" />
+        
+        <!-- Crime -->
+		<entry Category="RPG"
+        Name="crime" ImGuiName="crime" ListKey="crime" AliasKey="ui_name" RowKey="label" 
+        LocalizationAlias="text_ui_soul" />
+        
+        <!-- Dialogue Sequence Type Reward -->
+		<entry Category="RPG"
+        Name="dialogue_sequence_type_reward" ImGuiName="dialogue_sequence_type_reward" ListKey="dialogue_sequence_type_reward" AliasKey="xp_reward_mod" RowKey="sequence_type_id" />
+        
+        <!-- Document Required Skill -->
+		<entry Category="RPG"
+        Name="document_required_skill" ImGuiName="document_required_skill" ListKey="document_required_skill" AliasKey="item_id" RowKey="item_id" 
+        GuidAlias="item,Id,UIName" />
+        
+        <!-- Document Requirement -->
+		<entry Category="RPG"
+        Name="document_requirement" ImGuiName="document_requirement" ListKey="document_requirement" AliasKey="item_id" RowKey="item_id" 
+        GuidAlias="item,Id,UIName" />
+        
+        <!-- Document Reward -->
+		<entry Category="RPG"
+        Name="document_reward" ImGuiName="document_reward" ListKey="document_reward" AliasKey="item_id" RowKey="item_id" 
+        GuidAlias="item,Id,UIName"/>
+        
+        <!-- Document Reward Perk -->
+        
+        <!-- Document Rerities -->
+		<entry Category="RPG"
+        Name="DocumentRarity" ImGuiName="DocumentRarity" ListKey="DocumentRarity" AliasKey="XPMultiplier" RowKey="Name" />
+        
+        <!-- Faction Label -->
+		<entry Category="RPG"
+        Name="faction_label" ImGuiName="faction_label" ListKey="faction_label" AliasKey="" RowKey="name" />
+        
+        <!-- Game Over -->
+		<entry Category="RPG"
+        Name="game_over" ImGuiName="game_over" ListKey="game_over" AliasKey="game_over_name" RowKey="game_over_id" />
+        
+        <!-- Game Over Type -->
+		<entry Category="RPG"
+        Name="game_over_type" ImGuiName="game_over_type" ListKey="game_over_type" AliasKey="game_over_type_name" RowKey="game_over_type_id" />
+        
+        <!-- Gender -->
+		<entry Category="RPG"
+        Name="gender" ImGuiName="gender" ListKey="gender" AliasKey="gender_name" RowKey="gender_id" />
+        
+        <!-- Horse Irritation -->
+		<entry Category="RPG"
+        Name="horse_irritation" ImGuiName="horse_irritation" ListKey="horse_irritation" AliasKey="morale_change_id" RowKey="horse_irritation_id" />
+        
+        <!-- Hunting Role -->
+		<entry Category="RPG"
+        Name="hunting_role" ImGuiName="hunting_role" ListKey="hunting_role" AliasKey="hunting_role_name" RowKey="hunting_role_id" />
+        
+        <!-- Location -->
+		<entry Category="RPG"
+        Name="location" ImGuiName="location" ListKey="location" AliasKey="menu_cutscene_name" RowKey="location_id" />
+        
+        <!-- Location Category -->
+		<entry Category="RPG"
+        Name="location_category" ImGuiName="location_category" ListKey="location_category" AliasKey="location_category_name" RowKey="location_category_id" />
+        
+        <!-- Location to Perk -->
+		<entry Category="RPG"
+        Name="location2perk" ImGuiName="location2perk" ListKey="location2perk" AliasKey="perk_id" RowKey="location_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Metarole -->
+		<entry Category="RPG"
+        Name="metarole" ImGuiName="metarole" ListKey="metarole" AliasKey="" RowKey="metarole_name" />
+        
+        <!-- Money Change -->
+		<entry Category="RPG"
+        Name="money_change" ImGuiName="money_change" ListKey="money_change" AliasKey="change" RowKey="name" />
+        
+        <!-- Morale Change -->
+		<entry Category="RPG"
+        Name="morale_change" ImGuiName="morale_change" ListKey="morale_change" AliasKey="name" RowKey="morale_change_id" />
+        
+        <!-- Nervousness Flag -->
+		<entry Category="RPG"
+        Name="nervousness_flag" ImGuiName="nervousness_flag" ListKey="nervousness_flag" AliasKey="interval" RowKey="name" />
+        
+        <!-- Perk -->
+		<entry Category="RPG"
+        Name="perk" ImGuiName="perk" ListKey="perk" AliasKey="perk_ui_name" RowKey="perk_id" 
+        LocalizationAlias="text_ui_soul" />
+        
+        <!-- Perk Buff -->
+		<entry Category="RPG"
+        Name="perk_buff" ImGuiName="perk_buff" ListKey="perk_buff" AliasKey="buff_id" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Buff Override -->
+		<entry Category="RPG"
+        Name="perk_buff_override" ImGuiName="perk_buff_override" ListKey="perk_buff_override" AliasKey="target_buff_id" RowKey="target_buff_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Codex -->
+		<entry Category="RPG"
+        Name="perk_codex" ImGuiName="perk_codex" ListKey="perk_codex" AliasKey="perk_id" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Combat Technique -->
+		<entry Category="RPG"
+        Name="perk_combat_technique" ImGuiName="perk_combat_technique" ListKey="perk_combat_technique" AliasKey="" RowKey="perk_id"
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Companion -->
+		<entry Category="RPG"
+        Name="perk_companion" ImGuiName="perk_companion" ListKey="perk_companion" AliasKey="perk_id" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Recipe -->
+		<entry Category="RPG"
+        Name="perk_recipe" ImGuiName="perk_recipe" ListKey="perk_recipe" AliasKey="perk_id" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk RPG Parameter Override -->
+		<entry Category="RPG"
+        Name="perk_rpg_param_override" ImGuiName="perk_rpg_param_override" ListKey="perk_rpg_param_override" AliasKey="perk_id" RowKey="rpg_param_key"  
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Script -->
+		<entry Category="RPG"
+        Name="perk_script" ImGuiName="perk_script" ListKey="perk_script" AliasKey="perk_editor_name" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Soul Ability -->
+		<entry Category="RPG"
+        Name="perk_soul_ability" ImGuiName="perk_soul_ability" ListKey="perk_soul_ability" AliasKey="perk_id" RowKey="perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- Perk Visibility -->
+		<entry Category="RPG"
+        Name="perk_visibility" ImGuiName="perk_visibility" ListKey="perk_visibility" AliasKey="perk_visibility_name" RowKey="perk_visibility_id" />
+        
+        <!-- Perk to Perk Exclusivity -->
+		<entry Category="RPG"
+        Name="perk2perk_exclusivity" ImGuiName="perk2perk_exclusivity" ListKey="perk2perk_exclusivity" AliasKey="first_perk_id" RowKey="first_perk_id" 
+        GuidAlias="perk,perk_id,perk_ui_name" />
+        
+        <!-- POI Type -->
+		<entry Category="RPG"
+        Name="poi_type" ImGuiName="poi_type" ListKey="poi_type" AliasKey="label" RowKey="poi_type_id" />
+        
+        <!-- POI Type to Perk -->
+		<entry Category="RPG"
+        Name="poi_type2perk" ImGuiName="poi_type2perk" ListKey="poi_type2perk" AliasKey="poi_type_id" RowKey="perk_id" 
+        GuidAlias="poi_type,poi_type_id,poi_type_name" />
+        
+        <!-- Race -->
+		<entry Category="RPG"
+        Name="race" ImGuiName="race" ListKey="race" AliasKey="race_name" RowKey="race_id" />
+        
+        <!-- Reading Spot Type -->
+		<entry Category="RPG"
+        Name="reading_spot_type" ImGuiName="reading_spot_type" ListKey="reading_spot_type" AliasKey="reading_spot_type_name" RowKey="reading_spot_type_id" />
+        
+        <!-- Relationship Flag -->
+		<entry Category="RPG"
+        Name="relationship_flag" ImGuiName="relationship_flag" ListKey="relationship_flag" AliasKey="interval" RowKey="name" />
+        
+        <!-- Renown Flag -->
+		<entry Category="RPG"
+        Name="renown_flag" ImGuiName="renown_flag" ListKey="renown_flag" AliasKey="interval" RowKey="name" />
+        
+        <!-- Reputation Change -->
+		<entry Category="RPG"
+        Name="reputation_change" ImGuiName="reputation_change" ListKey="reputation_change" AliasKey="name" RowKey="reputation_change_id" />
+        
+        <!-- Reputation Change Target -->
+		<entry Category="RPG"
+        Name="reputation_change_target" ImGuiName="reputation_change_target" ListKey="reputation_change_target" AliasKey="reputation_change_target_name" RowKey="reputation_change_target_id" />
+        
+        <!-- Reputation Condition -->
+		<entry Category="RPG"
+        Name="reputation_condition" ImGuiName="reputation_condition" ListKey="reputation_condition" AliasKey="min_reputation" RowKey="name" />
+        
+        <!-- Reputation Notification -->
+		<entry Category="RPG"
+        Name="reputation_notification" ImGuiName="reputation_notification" ListKey="reputation_notification" AliasKey="reputation_notification_name" RowKey="reputation_notification_id" />
+        
+        <!-- Rich Presence -->
+		<entry Category="RPG"
+        Name="rich_presence" ImGuiName="rich_presence" ListKey="rich_presence" AliasKey="name_string_id" RowKey="rich_presence_id" />
+        
+        <!-- Role -->
+		<entry Category="RPG"
+        Name="role" ImGuiName="role" ListKey="role" AliasKey="_role_string_name" RowKey="role_name" />
+        
+        <!-- RPG Context Tag -->
+		<entry Category="RPG"
+        Name="rpg_context_tag" ImGuiName="rpg_context_tag" ListKey="rpg_context_tag" AliasKey="rpg_context_name" RowKey="rpg_context_id" />
+        
+        <!-- RPG Context Type -->
+		<entry Category="RPG"
+        Name="rpg_context_type" ImGuiName="rpg_context_type" ListKey="rpg_context_type" AliasKey="rpg_context_type_name" RowKey="rpg_context_type_id" />
+        
+        <!-- RPG Damage Type -->
+		<entry Category="RPG"
+        Name="rpg_damage_type" ImGuiName="rpg_damage_type" ListKey="rpg_damage_type" AliasKey="rpg_damage_type_name" RowKey="rpg_damage_type_id" />
+        
+        <!-- RPG Param -->
+		<entry Category="RPG"
+        Name="rpg_param" ImGuiName="rpg_param" ListKey="rpg_param" AliasKey="rpg_param_value" RowKey="rpg_param_key" />
+        
+        <!-- RPG Movement Type -->
+		<entry Category="RPG"
+        Name="rpg_movement_type" ImGuiName="rpg_movement_type" ListKey="rpg_movement_type" AliasKey="rpg_movement_type_name" RowKey="rpg_movement_type_id" />
+        
+        <!-- RPG Sound -->
+		<entry Category="RPG"
+        Name="rpg_sound" ImGuiName="rpg_sound" ListKey="rpg_sound" AliasKey="rpg_sound_name" RowKey="rpg_sound_id" />
+        
+        <!-- Skill -->
+		<entry Category="RPG"
+        Name="skill" ImGuiName="skill" ListKey="skill" AliasKey="skill_name" RowKey="skill_id" />
+        
+        <!-- Skill Category -->
+		<entry Category="RPG"
+        Name="skill_category" ImGuiName="skill_category" ListKey="skill_category" AliasKey="skill_category_name" RowKey="skill_category_id" />
+        
+        <!-- Skill Check Difficulty -->
+		<entry Category="RPG"
+        Name="skill_check_difficulty" ImGuiName="skill_check_difficulty" ListKey="skill_check_difficulty" AliasKey="skill_check_difficulty_name" RowKey="skill_check_difficulty_id" />
+        
+        <!-- Skill Lesson Level -->
+		<entry Category="RPG"
+        Name="SkillLessonLevel" ImGuiName="SkillLessonLevel" ListKey="SkillLessonLevel" AliasKey="Price" RowKey="Level" />
+        
+        <!-- Skill to Item Category -->
+		<entry Category="RPG"
+        Name="skill2item_category" ImGuiName="skill2item_category" ListKey="skill2item_category" AliasKey="skill_id" RowKey="item_category" />
+        
+        <!-- Skiptime Type -->
+		<entry Category="RPG"
+        Name="skiptime_type" ImGuiName="skiptime_type" ListKey="skiptime_type" AliasKey="skiptime_type_name" RowKey="skiptime_type_id" />
+        
+        <!-- Sleeping Spot Type -->
+		<entry Category="RPG"
+        Name="sleeping_spot_type" ImGuiName="sleeping_spot_type" ListKey="sleeping_spot_type" AliasKey="sleeping_spot_type_name" RowKey="sleeping_spot_type_id" />
+        
+        <!-- Social Class -->
+		<entry Category="RPG"
+        Name="social_class" ImGuiName="social_class" ListKey="social_class" AliasKey="social_class_name" RowKey="social_class_id" />
+        
+        <!-- Soul -->
+		<entry Category="RPG"
+        Name="soul" ImGuiName="soul" ListKey="soul" AliasKey="skald_character_name" RowKey="soul_id" />
+        
+        <!-- Soul Ability -->
+		<entry Category="RPG"
+        Name="soul_ability" ImGuiName="soul_ability" ListKey="soul_ability" AliasKey="soul_ability_name" RowKey="soul_ability_id" />
+        
+        <!-- Soul Archetypes -->
+		<entry Category="RPG"
+        Name="soul_archetype" ImGuiName="soul_archetype" ListKey="soul_archetype" AliasKey="soul_archetype_name" RowKey="soul_archetype_id" />
+        
+        <!-- Soul Archetype Movements -->
+		<entry Category="RPG"
+        Name="soul_archetype_movement" ImGuiName="soul_archetype_movement" ListKey="soul_archetype_movement" AliasKey="" RowKey="soul_archetype_id" />
+        
+        <!-- Soul Class -->
+		<entry Category="RPG"
+        Name="soul_class" ImGuiName="soul_class" ListKey="soul_class" AliasKey="soul_class_name" RowKey="soul_class_id" />
+        
+        <!-- Soul Combat Level -->
+		<entry Category="RPG"
+        Name="soul_combat_level" ImGuiName="soul_combat_level" ListKey="soul_combat_level" AliasKey="" RowKey="soul_combat_level_name" />
+        
+        <!-- Soul Crime Role -->
+		<entry Category="RPG"
+        Name="soul_crime_role" ImGuiName="soul_crime_role" ListKey="soul_crime_role" AliasKey="soul_crime_role_name" RowKey="soul_crime_role_id" />
+        
+        <!-- Soul UI Name -->
+		<entry Category="RPG"
+        Name="soul_ui_name" ImGuiName="soul_ui_name" ListKey="soul_ui_name" AliasKey="soul_ui_name_name" RowKey="soul_ui_name_id" />
+        
+        <!-- Soul VIP Class -->
+		<entry Category="RPG"
+        Name="soul_vip_class" ImGuiName="soul_vip_class" ListKey="soul_vip_class" AliasKey="soul_vip_class_name" RowKey="soul_vip_class_id" />
+        
+        <!-- Soul to Perk -->
+		<entry Category="RPG"
+        Name="soul2perk" ImGuiName="soul2perk" ListKey="soul2perk" AliasKey="soul_id" RowKey="soul_id" 
+        GuidAlias="soul,soul_id,skald_character_name" />
+        
+        <!-- Soul to Skald: Skill -->
+		<entry Category="RPG"
+        Name="soul2skald_skill" ImGuiName="soul2skald_skill" ListKey="soul2skald_skill" AliasKey="skill_id" RowKey="soul_id" />
+        
+        <!-- Soul to Skald: Stat -->
+		<entry Category="RPG"
+        Name="soul2skald_soul_stat" ImGuiName="soul2skald_soul_stat" ListKey="soul2skald_soul_stat" AliasKey="skald_soul_stat_id" RowKey="soul_id" />
+        
+        <!-- Soul State Effect Context -->
+		<entry Category="RPG"
+        Name="SoulStateEffectContextData" ImGuiName="SoulStateEffectContextData" ListKey="SoulStateEffectContextData" AliasKey="StaminaRegenCooldown" RowKey="Id" />
+        
+        <!-- Stance -->
+		<entry Category="RPG"
+        Name="stance" ImGuiName="stance" ListKey="stance" AliasKey="stance_name" RowKey="stance_id" />
+        
+        <!-- Stat -->
+		<entry Category="RPG"
+        Name="stat" ImGuiName="stat" ListKey="stat" AliasKey="stat_name" RowKey="stat_id" />
+        
+        <!-- Statistic -->
+		<entry Category="RPG"
+        Name="statistic" ImGuiName="statistic" ListKey="statistic" AliasKey="" RowKey="statistic_name" />
+        
+        <!-- Statistic Group -->
+		<entry Category="RPG"
+        Name="statistic_group" ImGuiName="statistic_group" ListKey="statistic_group" AliasKey="statistic_group_name" RowKey="statistic_group_id" />
+        
+        <!-- Statistic Type -->
+		<entry Category="RPG"
+        Name="statistic_type" ImGuiName="statistic_type" ListKey="statistic_type" AliasKey="" RowKey="statistic_type_name" />
+        
+        <!-- Statistic Unit -->
+		<entry Category="RPG"
+        Name="statistic_unit" ImGuiName="statistic_unit" ListKey="statistic_unit" AliasKey="statistic_unit_name" RowKey="statistic_unit_id" />
+        
+        <!-- Very Rich Presence Text -->
+		<entry Category="RPG"
+        Name="v_rich_presence_text" ImGuiName="v_rich_presence_text" ListKey="v_rich_presence_text" AliasKey="text" RowKey="string_name" />
+        
+        <!-- XP Change -->
+		<entry Category="RPG"
+        Name="xp_change" ImGuiName="xp_change" ListKey="xp_change" AliasKey="change" RowKey="name" />
+        
 	</tables>
 </database>

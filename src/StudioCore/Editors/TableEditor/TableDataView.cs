@@ -23,12 +23,7 @@ public class TableDataView
         Screen = screen;
         EditorState = screen.EditorState;
 
-        // Get table definitions
-        var tableDefPath = $"{AppContext.BaseDirectory}\\Assets\\Data\\TableDefinitions.xml";
-        XDocument doc = XDocument.Load(tableDefPath);
-        var defs = doc.Descendants("tables").Elements("entry").ToList();
-
-        foreach(var entry in defs)
+        foreach(var entry in Screen.TableDefinitions)
         {
             var name = entry.Attribute("Name").Value;
             var imguiName = entry.Attribute("ImGuiName").Value;

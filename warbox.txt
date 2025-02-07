@@ -1,17 +1,73 @@
 #-----------------------------------------------
 # Editors
 #-----------------------------------------------
-FEAT: Add option to Save as Patch:
- This will save the XML file but with the project name appended to the end e.g. __MyMod.xml, and it will only include differences within that file, not the entire XML
+FEAT: fix the PTF save
+FEAT: add undo/redo support for property changes
 
 #-----------------------------------------------
 # Text Editor
 #-----------------------------------------------
-FEAT: add undo/redo support for the text edits
 
 #-----------------------------------------------
 # Table Editor
 #-----------------------------------------------
-NOTE: each table type is the XML file name that comes before any double underscores.
+FEAT: add LocalizationAlias table def support (display the text contents of the passed ui_string, for the alias of a row)
+FEAT: add GuidAlias table def support (display suitable localization based on the passed guid, for the alias of a row)
 
-FEAT: add save and package support
+FEAT: add LocalizationRef meta support (display the text contents of the passed ui_string)
+FEAT: add GuidRef meta support (display suitable localization based on the passed guid)
+
+GuidAlias="item,Id,UIName"
+ <table>,<guid attribute>,<attribute to use for localization lookup>
+ 
+FEAT: add category sort/ordering to table def
+
+
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        
+        <!-- XXX -->
+		<entry 
+        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+        

@@ -30,6 +30,9 @@ public static class TableMeta
         }
     }
 
+    /// <summary>
+    /// Get the 'pure' filename, without any appended parts
+    /// </summary>
     public static string GetPureXmlName(string fileName)
     {
         // Only assess the relevant part of the file name (i.e. ignore PTF part)
@@ -41,6 +44,9 @@ public static class TableMeta
         return fileName;
     }
 
+    /// <summary>
+    /// Handles collecting the meta string information, i.e. Name and Description
+    /// </summary>
     public static string GetMetaString(TableEditorState editorState, string metaField, string attributeName)
     {
         var displayedString = attributeName;
@@ -71,6 +77,7 @@ public static class TableMeta
     public static void DisplayActionColumn(XDocument document, XElement element, XAttribute attribute, int i)
     {
         // TODO: add check against meta, only display if needed
+        return;
 
         if (ImGui.Button($"{ForkAwesome.ArrowDown}##exampleButton{attribute.Name}{i}"))
         {
@@ -93,6 +100,7 @@ public static class TableMeta
         var width = ImGui.GetWindowWidth();
 
         // TODO: add check against meta, only display if needed
+        return;
 
         ImGui.AlignTextToFramePadding();
         ImGui.SetNextItemWidth(width * 0.15f);
@@ -105,6 +113,7 @@ public static class TableMeta
     public static void DisplayAttributeAddSection(XDocument document, XElement element)
     {
         var width = ImGui.GetWindowWidth();
+        return;
 
         // META will contain list of all possible attributes,
         // this section will allow the user to add any that are mossing from the current element

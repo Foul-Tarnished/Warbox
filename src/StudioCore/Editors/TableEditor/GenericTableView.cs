@@ -23,10 +23,10 @@ public class GenericTableView
     private string SearchValueText = "";
 
     public string Name = "";
-    private string ImGuiName = "rpg_param";
-    private string NodeListAttributeKey = "rpg_param";
-    private string NodeListAliasKey = "rpg_param_key";
-    private string RowEntryKey = "rpg_param_key";
+    private string ImGuiName = "";
+    private string NodeListAttributeKey = "";
+    private string NodeListAliasKey = "";
+    private string RowEntryKey = "";
 
     private string CurrentlySelectedRowEntry = "";
 
@@ -63,19 +63,23 @@ public class GenericTableView
 
         ImGui.BeginChild($"{ImGuiName}Section");
 
-        List<XElement> buffList = currentDocument.Descendants(NodeListAttributeKey).ToList();
+        List<XElement> elementList = currentDocument.Descendants(NodeListAttributeKey).ToList();
 
-        for (int i = 0; i < buffList.Count + 1; i++)
+        for (int i = 0; i < elementList.Count + 1; i++)
         {
-            if (i < buffList.Count)
+            if (i < elementList.Count)
             {
-                var entry = buffList[i];
+                var entry = elementList[i];
                 var key = entry.Attribute(RowEntryKey).Value;
                 var alias = "";
-                var aliasAttribute = entry.Attribute(NodeListAliasKey);
-                if (aliasAttribute != null)
+                XAttribute aliasAttribute = null;
+                if (NodeListAliasKey != "")
                 {
-                    alias = aliasAttribute.Value;
+                    aliasAttribute = entry.Attribute(NodeListAliasKey);
+                    if (aliasAttribute != null)
+                    {
+                        alias = aliasAttribute.Value;
+                    }
                 }
 
                 if (!TextSearchFilters.FilterTableRowEntry(entry, alias, SearchKeyText))
@@ -83,16 +87,16 @@ public class GenericTableView
                     continue;
                 }
 
-                if (ImGui.Selectable($"{key}##{ImGuiName}selectEntry{i}", key == CurrentlySelectedRowEntry))
+                if (ImGui.Selectable($"{key}##{ImGuiName}selectEntry{i}", $"{key}{i}" == CurrentlySelectedRowEntry))
                 {
-                    CurrentlySelectedRowEntry = key;
+                    CurrentlySelectedRowEntry = $"{key}{i}";
                 }
 
                 // Arrow Selection
                 if (ImGui.IsItemHovered() && SelectNextRowEntry)
                 {
                     SelectNextRowEntry = false;
-                    CurrentlySelectedRowEntry = key;
+                    CurrentlySelectedRowEntry = $"{key}{i}";
                 }
                 if (ImGui.IsItemFocused() && (InputTracker.GetKey(Veldrid.Key.Up) || InputTracker.GetKey(Veldrid.Key.Down)))
                 {
@@ -105,7 +109,7 @@ public class GenericTableView
                 }
 
                 // Context
-                if (key == CurrentlySelectedRowEntry)
+                if ($"{key}{i}" == CurrentlySelectedRowEntry)
                 {
                     TableContextMenu.DisplayTableRowEntryContextMenu(ImGuiName, currentDocument, entry, i);
                 }
