@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace StudioCore.Core.Data;
 
-public class DataStatus
+public class DataStatus : IComparable<DataStatus>
 {
     /// <summary>
     /// Name of the file
@@ -35,5 +35,10 @@ public class DataStatus
         Path = path;
         Modified = false;
         IsProjectData = false;
+    }
+
+    public int CompareTo(DataStatus other)
+    {
+        return Name.CompareTo(other.Name);
     }
 }

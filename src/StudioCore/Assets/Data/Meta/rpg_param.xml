@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <meta>
+    <headers>
+        <rpg_param 
+        Name="RPG Parameters" 
+        Description="" />
+    </headers>
 	<entries>
-		<rpg_param_key 
+		<rpg_param-rpg_param_key 
         Name="Parameter"
         Description="The name of this parameter." />
         
-		<rpg_param_value
+		<rpg_param-rpg_param_value
         Name="Value"
         Description="The value this parameter is set to." />
 	</entries>

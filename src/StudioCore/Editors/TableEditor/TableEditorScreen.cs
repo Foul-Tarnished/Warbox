@@ -28,20 +28,9 @@ public class TableEditorScreen : EditorScreen
 
     public ActionManager EditorActionManager = new();
 
-    public List<XElement> TableDefinitions = new List<XElement>();
-
     public TableEditorScreen(Sdl2Window window, GraphicsDevice device)
     {
-        // Get basic table definitions
-        var tableDefPath = $"{AppContext.BaseDirectory}\\Assets\\Data\\TableDefinitions.xml";
-        XDocument doc = XDocument.Load(tableDefPath);
-        TableDefinitions = doc.Descendants("tables").Elements("entry").ToList();
-
-        // Get complex table definitions (ones with sub lists)
-        // FactionTree
-        // SkillTeacher
-        // Skirmisheventtypes
-        // SoulPool
+        TableDefinition.Setup();
 
         EditorState = new(this);
         FileSelectionView = new(this);

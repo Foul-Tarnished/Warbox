@@ -39,16 +39,9 @@ public class TableFileSelectionView
 
             ImGui.BeginChild("tableListSection");
 
-            for (int i = 0; i < Warbox.DataHandler.Tables.Count; i++)
+            foreach(var entry in TableDefinition.Categories)
             {
-                var entry = Warbox.DataHandler.Tables.ElementAt(i);
-                var status = entry.Key;
-                var name = entry.Key.Name;
-
-                if (TextSearchFilters.FilterFileList(name, SearchText))
-                {
-                    SelectionRow(i, entry, status, name);
-                }
+                DisplayCategory(entry);
             }
 
             ImGui.EndChild();
@@ -57,9 +50,47 @@ public class TableFileSelectionView
         }
     }
 
+    private void DisplayCategory(string category)
+    {
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.DefaultOpen;
+
+        if (ImGui.CollapsingHeader(category, flags))
+        {
+            for (int i = 0; i < Warbox.DataHandler.Tables.Count; i++)
+            {
+                var entry = Warbox.DataHandler.Tables.ElementAt(i);
+                var status = entry.Key;
+                var name = entry.Key.Name;
+
+                var display = false;
+
+                var tableEntry = TableDefinition.Definitions.Where(e => e.Attribute("Name").Value == name).FirstOrDefault();
+
+                if (tableEntry != null && tableEntry.Attribute("Category") != null)
+                {
+                    if (tableEntry.Attribute("Category").Value == category)
+                    {
+                        display = true;
+                    }
+                }
+
+                if (display)
+                {
+                    if (TextSearchFilters.FilterFileList(name, SearchText))
+                    {
+                        SelectionRow(i, entry, status, name);
+                    }
+                }
+            }
+        }
+    }
+
     private void SelectionRow(int index, KeyValuePair<DataStatus, XDocument> entry, DataStatus status, string name)
     {
-        if (ImGui.Selectable($"{name}##tableFileEntry{name}{index}", EditorState.SelectedStatus == status))
+        // Typically the name of the file is one of the headers, so just do this
+        var displayName = TableMeta.GetHeaderName(EditorState, "Name", $"{name}", true);
+
+        if (ImGui.Selectable($"{displayName}##tableFileEntry{name}{index}", EditorState.SelectedStatus == status))
         {
             EditorState.UpdateSelection(entry);
         }

@@ -20,54 +20,8 @@ FEAT: add GuidRef meta support (display suitable localization based on the passe
 GuidAlias="item,Id,UIName"
  <table>,<guid attribute>,<attribute to use for localization lookup>
  
-FEAT: add category sort/ordering to table def
 
 
-        <!-- XXX -->
-		<entry 
+        <!-- Combat -->
+		<entry Category="Combat"
         Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        
-        <!-- XXX -->
-		<entry 
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
-        

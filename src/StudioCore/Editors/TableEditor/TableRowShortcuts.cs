@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace StudioCore.Editors;
+namespace StudioCore.Editors.TableEditor;
 
 public static class TableRowShortcuts
 {

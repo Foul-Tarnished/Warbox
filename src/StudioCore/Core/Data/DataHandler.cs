@@ -15,17 +15,17 @@ public class DataHandler
 {
     private bool SetupData = false;
 
-    public Dictionary<DataStatus, XDocument> Localization = new Dictionary<DataStatus, XDocument>();
+    public SortedDictionary<DataStatus, XDocument> Localization = new();
 
     /// <summary>
     /// Holds our working tables
     /// </summary>
-    public Dictionary<DataStatus, XDocument> Tables = new Dictionary<DataStatus, XDocument>();
+    public SortedDictionary<DataStatus, XDocument> Tables = new();
 
     /// <summary>
     /// Holds the base tables, used for comparison to generate PTF output
     /// </summary>
-    public Dictionary<DataStatus, XDocument> Vanilla_Tables = new Dictionary<DataStatus, XDocument>();
+    public SortedDictionary<DataStatus, XDocument> Vanilla_Tables = new();
 
     //public Dictionary<DataStatus, XDocument> Scripts = new Dictionary<DataStatus, XDocument>();
 
@@ -46,17 +46,17 @@ public class DataHandler
         }
     }
 
-    public Dictionary<DataStatus, XDocument> SetupDataFromPak(string folderName, string pakName, bool ignoreProject = false)
+    public SortedDictionary<DataStatus, XDocument> SetupDataFromPak(string folderName, string pakName, bool ignoreProject = false)
     {
         if (Warbox.DataRoot == "")
-            return new Dictionary<DataStatus, XDocument>();
+            return new SortedDictionary<DataStatus, XDocument>();
 
         var dataDir = $"{Warbox.DataRoot}\\{folderName}\\{pakName}.pak";
         var projectDir = $"{Warbox.ProjectDataRoot}\\{folderName}\\";
 
         var baseData = ReadXmlFromZip(dataDir);
         var projectData = ReadXmlFromDirectory(projectDir);
-        var finalData = new Dictionary<DataStatus, XDocument>();
+        var finalData = new SortedDictionary<DataStatus, XDocument>();
 
         // Replace entries with project data if present
         if (projectData.Count > 0 && !ignoreProject)
@@ -106,9 +106,9 @@ public class DataHandler
         return finalData;
     }
 
-    private Dictionary<DataStatus, XDocument> ReadXmlFromZip(string zipPath)
+    private SortedDictionary<DataStatus, XDocument> ReadXmlFromZip(string zipPath)
     {
-        var xmlFiles = new Dictionary<DataStatus, XDocument>();
+        var xmlFiles = new SortedDictionary<DataStatus, XDocument>();
 
         try
         {
@@ -150,9 +150,9 @@ public class DataHandler
         return xmlFiles;
     }
 
-    public Dictionary<DataStatus, XDocument> ReadXmlFromDirectory(string directoryPath)
+    public SortedDictionary<DataStatus, XDocument> ReadXmlFromDirectory(string directoryPath)
     {
-        var xmlFiles = new Dictionary<DataStatus, XDocument>();
+        var xmlFiles = new SortedDictionary<DataStatus, XDocument>();
 
         try
         {

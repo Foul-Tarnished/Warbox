@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using Assimp;
+using ImGuiNET;
 using StudioCore.Configuration;
 using StudioCore.Editors.TextEditor;
 using StudioCore.Interface;
@@ -136,81 +137,146 @@ public class GenericTableView
         var currentDocument = EditorState.SelectedDocument;
 
         List<XElement> rowEntries = currentDocument.Descendants(NodeListAttributeKey).ToList();
-        var entry = rowEntries.Where(e => e.Attribute(RowEntryKey).Value == CurrentlySelectedRowEntry).FirstOrDefault();
+
+        if (CurrentlySelectedRowEntryIndex != -1)
+        {
+            var entry = rowEntries.ElementAt(CurrentlySelectedRowEntryIndex);
+
+            if (entry != null)
+            {
+                //-------------------
+                // Names
+                //-------------------
+                if (ImGui.BeginTable($"{ImGuiName}AttributeTable", 4, ImGuiTableFlags.SizingFixedFit))
+                {
+                    ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthFixed);
+                    ImGui.TableSetupColumn("Inputs", ImGuiTableColumnFlags.WidthFixed);
+                    ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed);
+                    ImGui.TableSetupColumn("Meta", ImGuiTableColumnFlags.WidthFixed);
+
+                    HandleElementEntry(currentDocument, entry);
+
+                    ImGui.EndTable();
+                }
+            }
+
+            TableMeta.DisplayAttributeAddSection(currentDocument, entry);
+        }
+
+        ImGui.EndChild();
+    }
+
+    private void HandleElementEntry(XDocument currentDocument, XElement entry)
+    {
+        DisplayHeaderRow(currentDocument, entry);
+
+        var attributes = entry.Attributes().ToList();
+
+        for (int i = 0; i < attributes.Count; i++)
+        {
+            var attribute = attributes[i];
+
+            DisplayAttributeRow(currentDocument, entry, attribute, i);
+        }
+
+        foreach (var child in entry.Elements().ToList())
+        {
+            ImGui.Indent();
+            HandleElementEntry(currentDocument, child);
+            ImGui.Unindent();
+        }
+    }
+
+    private void DisplayHeaderRow(XDocument currentDocument, XElement entry)
+    {
+        var width = ImGui.GetWindowWidth();
 
         if (entry != null)
         {
-            var attributes = entry.Attributes().ToList();
-
-            //-------------------
-            // Names
-            //-------------------
-            if (ImGui.BeginTable($"{ImGuiName}AttributeTable", 4, ImGuiTableFlags.SizingFixedFit))
+            if (TextSearchFilters.FilterTableEntry(entry.Name.ToString(), SearchValueText))
             {
-                ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthFixed);
-                ImGui.TableSetupColumn("Inputs", ImGuiTableColumnFlags.WidthFixed);
-                ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed);
-                ImGui.TableSetupColumn("Meta", ImGuiTableColumnFlags.WidthFixed);
+                ImGui.TableNextRow();
 
-                for (int i = 0; i < attributes.Count; i++)
-                {
-                    var attribute = attributes[i];
+                // Name Column
+                ImGui.TableSetColumnIndex(0);
+                ImGui.AlignTextToFramePadding();
 
-                    if (attribute != null)
-                    {
-                        if (!TextSearchFilters.FilterTableEntry(attribute.Value, SearchValueText))
-                        {
-                            continue;
-                        }
+                var displayName = TableMeta.GetHeaderName(
+                    EditorState,
+                    "Name",
+                    $"{entry.Name}");
 
-                        ImGui.TableNextRow();
+                var description = TableMeta.GetHeaderName(
+                    EditorState,
+                    "Description",
+                    $"{entry.Name}");
 
-                        // Name Column
-                        ImGui.TableSetColumnIndex(0);
-                        ImGui.AlignTextToFramePadding();
+                ImGui.SetNextItemWidth(width * 0.25f);
+                UIHelper.DisplayHeaderText(displayName);
+                UIHelper.ShowHoverTooltip(description);
 
-                        var displayName = TableMeta.GetMetaString(
-                            EditorState, 
-                            "Name",
-                            attribute.Name.ToString());
+                // Inputs Column
+                ImGui.TableSetColumnIndex(1);
 
-                        var description = TableMeta.GetMetaString(
-                            EditorState,
-                            "Description",
-                            attribute.Name.ToString());
+                // Action
+                ImGui.TableSetColumnIndex(2);
 
-                        ImGui.SetNextItemWidth(width * 0.25f);
-                        ImGui.Text(displayName);
-                        UIHelper.ShowHoverTooltip(description);
-
-                        // Inputs Column
-                        ImGui.TableSetColumnIndex(1);
-
-                        var tValue = attribute.Value;
-
-                        ImGui.AlignTextToFramePadding();
-                        ImGui.SetNextItemWidth(width * 0.5f);
-                        ImGui.InputText($"##{ImGuiName}_input_{attribute.Name}{i}", ref tValue, 255);
-
-                        attribute.Value = tValue;
-
-                        // Action
-                        ImGui.TableSetColumnIndex(2);
-                        TableMeta.DisplayActionColumn(currentDocument, entry, attribute, i);
-
-                        // Meta
-                        ImGui.TableSetColumnIndex(3);
-                        TableMeta.DisplayInfoColumn(currentDocument, entry, attribute, i);
-                    }
-                }
-
-                ImGui.EndTable();
+                // Meta
+                ImGui.TableSetColumnIndex(3);
             }
         }
+    }
 
-        TableMeta.DisplayAttributeAddSection(currentDocument, entry);
+    private void DisplayAttributeRow(XDocument currentDocument, XElement entry, XAttribute attribute, int i)
+    {
+        var width = ImGui.GetWindowWidth();
 
-        ImGui.EndChild();
+        if (attribute != null)
+        {
+            if (TextSearchFilters.FilterTableEntry(attribute.Value, SearchValueText))
+            {
+                ImGui.TableNextRow();
+
+                // Name Column
+                ImGui.TableSetColumnIndex(0);
+                ImGui.AlignTextToFramePadding();
+
+                var displayName = TableMeta.GetAttributeName(
+                    EditorState,
+                    "Name",
+                    $"{entry.Name}",
+                    $"{attribute.Name}");
+
+                var description = TableMeta.GetAttributeName(
+                    EditorState,
+                    "Description",
+                    $"{entry.Name}",
+                    $"{attribute.Name}");
+
+                ImGui.SetNextItemWidth(width * 0.25f);
+                ImGui.Text(displayName);
+                UIHelper.ShowHoverTooltip(description);
+
+                // Inputs Column
+                ImGui.TableSetColumnIndex(1);
+
+                var tValue = attribute.Value;
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.SetNextItemWidth(width * 0.5f);
+                ImGui.InputText($"##{ImGuiName}_input_{attribute.Name}{i}", ref tValue, 255);
+
+                attribute.Value = tValue;
+
+                // Action
+                ImGui.TableSetColumnIndex(2);
+                TableMeta.DisplayActionColumn(currentDocument, entry, attribute, i);
+
+                // Meta
+                ImGui.TableSetColumnIndex(3);
+                TableMeta.DisplayInfoColumn(currentDocument, entry, attribute, i);
+            }
+        }
     }
 
     public void Shortcuts()

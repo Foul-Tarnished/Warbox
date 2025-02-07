@@ -23,7 +23,7 @@ public class TableDataView
         Screen = screen;
         EditorState = screen.EditorState;
 
-        foreach(var entry in Screen.TableDefinitions)
+        foreach(var entry in TableDefinition.Definitions)
         {
             var name = entry.Attribute("Name").Value;
             var imguiName = entry.Attribute("ImGuiName").Value;

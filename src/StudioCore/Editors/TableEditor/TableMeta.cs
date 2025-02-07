@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using StudioCore.Editors.TableEditor;
 using StudioCore.Utilities;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace StudioCore.Editors;
+namespace StudioCore.Editors.TableEditor;
 
 public static class TableMeta
 {
@@ -45,9 +44,38 @@ public static class TableMeta
     }
 
     /// <summary>
-    /// Handles collecting the meta string information, i.e. Name and Description
+    /// Returns the header pretty name and description
     /// </summary>
-    public static string GetMetaString(TableEditorState editorState, string metaField, string attributeName)
+    public static string GetHeaderName(TableEditorState editorState, string metaField, string nodeName, bool useName = false)
+    {
+        var displayedString = nodeName;
+        var fileName = nodeName;
+
+        if (!useName)
+            fileName = GetPureXmlName(editorState.SelectedStatus.Name);
+
+        if (Meta.ContainsKey(fileName))
+        {
+            var targetMeta = Meta[fileName];
+
+            List<XElement> elements = targetMeta.Descendants($"{nodeName}").ToList();
+
+            foreach (var entry in elements)
+            {
+                if (entry.Attribute(metaField) != null)
+                {
+                    return entry.Attribute(metaField).Value;
+                }
+            }
+        }
+
+        return displayedString;
+    }
+
+    /// <summary>
+    /// Returns the attribute pretty name and description
+    /// </summary>
+    public static string GetAttributeName(TableEditorState editorState, string metaField, string nodeName, string attributeName)
     {
         var displayedString = attributeName;
 
@@ -57,11 +85,11 @@ public static class TableMeta
         {
             var targetMeta = Meta[fileName];
 
-            List<XElement> buffList = targetMeta.Descendants(attributeName).ToList();
+            List<XElement> elements = targetMeta.Descendants($"{nodeName}-{attributeName}").ToList();
 
-            foreach(var entry in buffList)
+            foreach (var entry in elements)
             {
-                if(entry.Attribute(metaField) != null)
+                if (entry.Attribute(metaField) != null)
                 {
                     return entry.Attribute(metaField).Value;
                 }

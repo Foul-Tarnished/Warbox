@@ -1,0 +1,5 @@
+You can run lua commands in the in-game console by placing # before the lua
+
+Example:
+
+#a = (player.soul:GetState("health")); System.LogAlways("health:" .. a);
