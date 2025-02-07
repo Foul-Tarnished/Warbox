@@ -3,12 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace StudioCore.Editors.TextEditor;
 
 public static class TextSearchFilters
 {
-    public static bool FilterTableKey(string name, string input)
+    public static bool FilterTableRowEntry(XElement element, string name, string input)
+    {
+        var preppedName = name.ToLower().Trim();
+        var preppedInput = input.ToLower().Trim();
+
+        // TODO: add filtering by attribute to this using the element
+
+        if (input == "")
+            return true;
+
+        var isValid = false;
+
+        if (preppedName.Contains(preppedInput))
+        {
+            isValid = true;
+        }
+
+        return isValid;
+    }
+
+    public static bool FilterTableEntry(string name, string input)
     {
         var preppedName = name.ToLower().Trim();
         var preppedInput = input.ToLower().Trim();

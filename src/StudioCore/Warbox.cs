@@ -398,8 +398,6 @@ public class Warbox
             var success = ProjectHandler.CreateRecoveryProject();
             if (success)
             {
-                EditorHandler.SaveFocusedEditor();
-
                 PlatformUtils.Instance.MessageBox(
                     $"Attempted to save project files to {ProjectDataRoot} for manual recovery.\n" +
                     "You must manually replace your project files with these recovery files should you wish to restore them.\n" +

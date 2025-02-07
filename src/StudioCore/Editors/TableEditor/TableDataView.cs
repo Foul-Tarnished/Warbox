@@ -1,14 +1,13 @@
 ﻿using ImGuiNET;
-using StudioCore.Editors.TableEditor.Views;
 using StudioCore.Editors.TextEditor;
 using StudioCore.Interface;
-using StudioCore.KCD.Tables;
 using StudioCore.TextEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace StudioCore.Editors.TableEditor;
 
@@ -17,29 +16,62 @@ public class TableDataView
     private TableEditorScreen Screen;
     private TableEditorState EditorState;
 
-    private RpgParamView RpgParamView;
+    private SortedDictionary<string, GenericTableView> TableViews = new();
 
     public TableDataView(TableEditorScreen screen)
     {
         Screen = screen;
         EditorState = screen.EditorState;
 
-        RpgParamView = new RpgParamView(screen, this);
+        // Get table definitions
+        var tableDefPath = $"{AppContext.BaseDirectory}\\Assets\\Data\\TableDefinitions.xml";
+        XDocument doc = XDocument.Load(tableDefPath);
+        var defs = doc.Descendants("tables").Elements("entry").ToList();
+
+        foreach(var entry in defs)
+        {
+            var name = entry.Attribute("Name").Value;
+            var imguiName = entry.Attribute("ImGuiName").Value;
+            var listKey = entry.Attribute("ListKey").Value;
+            var aliasKey = entry.Attribute("AliasKey").Value;
+            var rowKey = entry.Attribute("RowKey").Value;
+
+            var newView = new GenericTableView(screen, name, imguiName, listKey, aliasKey, rowKey);
+
+            TableViews.Add(name, newView);
+        }
+
+        TableMeta.Setup();
     }
 
     public void Display()
     {
-        if (ImGui.Begin("Table Data##tableDataView"))
+        if (ImGui.Begin("Rows##tableRowView"))
         {
-            switch (EditorState.SelectedTable)
-            {
-                case RpgParam:
-                    RpgParamView.Display();
-                    break;
+            var xmlName = GetSelectedXmlName();
 
-                default:
-                    ImGui.Text("This table is not supported yet.");
-                    break;
+            foreach(var entry in TableViews)
+            {
+                if (entry.Value.Name == xmlName)
+                {
+                    entry.Value.DisplayEntries();
+                }
+            }
+
+            ImGui.End();
+        }
+
+
+        if (ImGui.Begin("Properties##tablePropertyView"))
+        {
+            var xmlName = GetSelectedXmlName();
+
+            foreach (var entry in TableViews)
+            {
+                if (entry.Value.Name == xmlName)
+                {
+                    entry.Value.DisplayProperties();
+                }
             }
 
             ImGui.End();
@@ -48,11 +80,30 @@ public class TableDataView
 
     public void Shortcuts()
     {
-        switch (EditorState.SelectedTable)
+        var xmlName = GetSelectedXmlName();
+
+        foreach (var entry in TableViews)
         {
-            case RpgParam:
-                RpgParamView.Shortcuts();
-                break;
+            if (entry.Value.Name == xmlName)
+            {
+                entry.Value.Shortcuts();
+            }
         }
+    }
+
+    public string GetSelectedXmlName()
+    {
+        if (EditorState.SelectedStatus == null)
+            return "";
+
+        var xmlName = EditorState.SelectedStatus.Name;
+
+        // Only assess the relevant part of the file name (i.e. ignore PTF part)
+        if (xmlName.Contains("__"))
+        {
+            xmlName = xmlName.Split("__")[0];
+        }
+
+        return xmlName;
     }
 }

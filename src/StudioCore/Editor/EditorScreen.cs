@@ -28,16 +28,6 @@ public interface EditorScreen
     public void DrawEditorMenu();
 
     /// <summary>
-    ///     Save specific data in this editor
-    /// </summary>
-    public void Save();
-
-    /// <summary>
-    ///     Package specific data in this editor for mod loading
-    /// </summary>
-    public void Package();
-
-    /// <summary>
     ///     Draw the main GUI using ImGUI
     /// </summary>
     /// <param name="commands">Editor specific commands from other editors</param>

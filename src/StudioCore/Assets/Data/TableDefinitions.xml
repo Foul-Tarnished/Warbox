@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<database>
+	<tables>
+		<entry Name="rpg_param" ImGuiName="rpg_param" ListKey="rpg_param" AliasKey="rpg_param_value" RowKey="rpg_param_key" />
+		<entry Name="buff" ImGuiName="buff" ListKey="buff" AliasKey="buff_name" RowKey="buff_id" />
+	</tables>
+</database>

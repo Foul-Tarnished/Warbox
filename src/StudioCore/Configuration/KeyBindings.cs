@@ -132,6 +132,13 @@ public class KeyBindings
             Key.S, 
             true);
 
+        public KeyBind CORE_SavePTF = new(
+            "Save PTF",
+            "Save the current file-level selection within the focused editor as a PTF xml.",
+            Key.S,
+            false,
+            true);
+
         public KeyBind CORE_Package = new(
             "Save",
             "Package the current file-level selection within the focused editor.",

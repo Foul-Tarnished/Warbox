@@ -35,6 +35,25 @@ public class TextEditorScreen : EditorScreen
 
     public void DrawEditorMenu()
     {
+        if (ImGui.BeginMenu("File"))
+        {
+            // Package
+            if (ImGui.MenuItem($"Package", KeyBindings.Current.CORE_Package.HintText))
+            {
+                Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
+                Package();
+            }
+
+            // Save
+            if (ImGui.MenuItem($"Save", KeyBindings.Current.CORE_Save.HintText))
+            {
+                Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
+                Save();
+            }
+
+            ImGui.EndMenu();
+        }
+
         if (ImGui.BeginMenu("Edit"))
         {
             if (ImGui.MenuItem($"Undo", KeyBindings.Current.CORE_UndoAction.HintText, false,
@@ -143,6 +162,18 @@ public class TextEditorScreen : EditorScreen
 
     public void Shortcuts()
     {
+        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_Save))
+        {
+            Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
+            Save();
+        }
+
+        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_Package))
+        {
+            Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
+            Package();
+        }
+
         if (EditorActionManager.CanUndo() && InputTracker.GetKeyDown(KeyBindings.Current.CORE_UndoAction))
         {
             EditorActionManager.UndoAction();

@@ -16,8 +16,18 @@ public class DataHandler
     private bool SetupData = false;
 
     public Dictionary<DataStatus, XDocument> Localization = new Dictionary<DataStatus, XDocument>();
+
+    /// <summary>
+    /// Holds our working tables
+    /// </summary>
     public Dictionary<DataStatus, XDocument> Tables = new Dictionary<DataStatus, XDocument>();
-    public Dictionary<DataStatus, XDocument> Scripts = new Dictionary<DataStatus, XDocument>();
+
+    /// <summary>
+    /// Holds the base tables, used for comparison to generate PTF output
+    /// </summary>
+    public Dictionary<DataStatus, XDocument> Vanilla_Tables = new Dictionary<DataStatus, XDocument>();
+
+    //public Dictionary<DataStatus, XDocument> Scripts = new Dictionary<DataStatus, XDocument>();
 
     public DataHandler() { }
 
@@ -28,12 +38,15 @@ public class DataHandler
             SetupData = true;
 
             Tables = SetupDataFromPak("Data", "Tables");
-            Scripts = SetupDataFromPak("Data", "Scripts");
+            Vanilla_Tables = SetupDataFromPak("Data", "Tables", true);
+
             Localization = SetupDataFromPak("Localization", "English_xml");
+
+            //Scripts = SetupDataFromPak("Data", "Scripts");
         }
     }
 
-    public Dictionary<DataStatus, XDocument> SetupDataFromPak(string folderName, string pakName)
+    public Dictionary<DataStatus, XDocument> SetupDataFromPak(string folderName, string pakName, bool ignoreProject = false)
     {
         if (Warbox.DataRoot == "")
             return new Dictionary<DataStatus, XDocument>();
@@ -46,7 +59,7 @@ public class DataHandler
         var finalData = new Dictionary<DataStatus, XDocument>();
 
         // Replace entries with project data if present
-        if (projectData.Count > 0)
+        if (projectData.Count > 0 && !ignoreProject)
         {
             foreach (var bEntry in baseData)
             {
@@ -58,7 +71,7 @@ public class DataHandler
                     var pDataStatus = pEntry.Key;
 
                     // Is match for existing file, override
-                    if (bDataStatus.Name == pDataStatus.Name || pDataStatus.Name.Contains(bDataStatus.Name) && pDataStatus.Name.Contains("__"))
+                    if (bDataStatus.Name == pDataStatus.Name)
                     {
                         hasProjectVersion = true;
 
@@ -66,14 +79,6 @@ public class DataHandler
                         if(finalData.ContainsKey(pEntry.Key))
                         {
                             finalData[pEntry.Key] = pEntry.Value;
-                        }
-                        else
-                        {
-                            if(pDataStatus.Name.Contains(bDataStatus.Name) && 
-                                pDataStatus.Name.Contains("__"))
-                            {
-                                finalData.Add(pDataStatus, pEntry.Value);
-                            }
                         }
                     }
                     // Is unique to project, new file
@@ -105,38 +110,42 @@ public class DataHandler
     {
         var xmlFiles = new Dictionary<DataStatus, XDocument>();
 
-        using (FileStream zipStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read))
-        using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Read))
+        try
         {
-            foreach (ZipArchiveEntry entry in archive.Entries)
+            using (FileStream zipStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read))
+            using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Read))
             {
-                if (entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                foreach (ZipArchiveEntry entry in archive.Entries)
                 {
-                    using (Stream entryStream = entry.Open())
+                    if (entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
                     {
-                        try
+                        using (Stream entryStream = entry.Open())
                         {
-                            string xmlContent;
-                            Encoding encoding = DetectEncoding(entryStream, out xmlContent);
-
-                            using (StringReader stringReader = new StringReader(xmlContent))
+                            try
                             {
-                                XDocument xmlDoc = XDocument.Load(stringReader);
+                                string xmlContent;
+                                Encoding encoding = DetectEncoding(entryStream, out xmlContent);
 
-                                var name = Path.GetFileNameWithoutExtension(entry.FullName);
-                                var dataStatus = new DataStatus(name, entry.FullName);
+                                using (StringReader stringReader = new StringReader(xmlContent))
+                                {
+                                    XDocument xmlDoc = XDocument.Load(stringReader);
 
-                                xmlFiles[dataStatus] = xmlDoc;
+                                    var name = Path.GetFileNameWithoutExtension(entry.FullName);
+                                    var dataStatus = new DataStatus(name, entry.FullName);
+
+                                    xmlFiles[dataStatus] = xmlDoc;
+                                }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error reading {entry.FullName}: {ex.Message}");
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error reading {entry.FullName}: {ex.Message}");
+                            }
                         }
                     }
                 }
             }
         }
+        catch { }
 
         return xmlFiles;
     }
@@ -145,33 +154,37 @@ public class DataHandler
     {
         var xmlFiles = new Dictionary<DataStatus, XDocument>();
 
-        if (!Directory.Exists(directoryPath))
+        try
         {
-            Console.WriteLine($"Directory '{directoryPath}' does not exist.");
-            return xmlFiles;
-        }
-
-        foreach (string filePath in Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories))
-        {
-            try
+            if (!Directory.Exists(directoryPath))
             {
-                string xmlContent;
-                Encoding encoding = DetectEncoding(filePath, out xmlContent);
+                Console.WriteLine($"Directory '{directoryPath}' does not exist.");
+                return xmlFiles;
+            }
 
-                using (StringReader stringReader = new StringReader(xmlContent))
+            foreach (string filePath in Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories))
+            {
+                try
                 {
-                    XDocument xmlDoc = XDocument.Load(stringReader);
+                    string xmlContent;
+                    Encoding encoding = DetectEncoding(filePath, out xmlContent);
 
-                    var name = Path.GetFileNameWithoutExtension(filePath);
-                    var dataStatus = new DataStatus(name, filePath);
-                    xmlFiles[dataStatus] = xmlDoc;
+                    using (StringReader stringReader = new StringReader(xmlContent))
+                    {
+                        XDocument xmlDoc = XDocument.Load(stringReader);
+
+                        var name = Path.GetFileNameWithoutExtension(filePath);
+                        var dataStatus = new DataStatus(name, filePath);
+                        xmlFiles[dataStatus] = xmlDoc;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error reading {filePath}: {ex.Message}");
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error reading {filePath}: {ex.Message}");
-            }
         }
+        catch { }
 
         return xmlFiles;
     }

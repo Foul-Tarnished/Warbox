@@ -43,29 +43,9 @@ public class EditorHandler
         }
     }
 
-    public void SaveFocusedEditor()
-    {
-        FocusedEditor.Save();
-    }
-
-    public void PackageFocusedEditor()
-    {
-        FocusedEditor.Package();
-    }
-
     public void HandleEditorShortcuts()
     {
-        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_Save))
-        {
-            Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-            SaveFocusedEditor();
-        }
 
-        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_Package))
-        {
-            Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-            PackageFocusedEditor();
-        }
     }
 
     private bool MayChangeProject()
@@ -147,20 +127,6 @@ public class EditorHandler
                 }
 
                 ImGui.EndMenu();
-            }
-
-            // Save
-            if (ImGui.MenuItem($"Save", KeyBindings.Current.CORE_Save.HintText))
-            {
-                Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-                SaveFocusedEditor();
-            }
-
-            // Package
-            if (ImGui.MenuItem($"Package", KeyBindings.Current.CORE_Package.HintText))
-            {
-                Warbox.ProjectHandler.WriteProjectConfig(Warbox.ProjectHandler.CurrentProject);
-                PackageFocusedEditor();
             }
 
             ImGui.EndMenu();
