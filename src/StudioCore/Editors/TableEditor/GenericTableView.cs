@@ -29,6 +29,7 @@ public class GenericTableView
     private string RowEntryKey = "";
 
     private string CurrentlySelectedRowEntry = "";
+    private int CurrentlySelectedRowEntryIndex = -1;
 
     private bool SelectNextRowEntry = false;
 
@@ -87,16 +88,19 @@ public class GenericTableView
                     continue;
                 }
 
-                if (ImGui.Selectable($"{key}##{ImGuiName}selectEntry{i}", $"{key}{i}" == CurrentlySelectedRowEntry))
+                if (ImGui.Selectable($"{key}##{ImGuiName}selectEntry{i}", 
+                    key == CurrentlySelectedRowEntry && CurrentlySelectedRowEntryIndex == i))
                 {
-                    CurrentlySelectedRowEntry = $"{key}{i}";
+                    CurrentlySelectedRowEntry = key;
+                    CurrentlySelectedRowEntryIndex = i;
                 }
 
                 // Arrow Selection
                 if (ImGui.IsItemHovered() && SelectNextRowEntry)
                 {
                     SelectNextRowEntry = false;
-                    CurrentlySelectedRowEntry = $"{key}{i}";
+                    CurrentlySelectedRowEntry = key;
+                    CurrentlySelectedRowEntryIndex = i;
                 }
                 if (ImGui.IsItemFocused() && (InputTracker.GetKey(Veldrid.Key.Up) || InputTracker.GetKey(Veldrid.Key.Down)))
                 {
