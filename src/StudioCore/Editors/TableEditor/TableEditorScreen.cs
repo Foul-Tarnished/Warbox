@@ -25,6 +25,7 @@ public class TableEditorScreen : EditorScreen
     public TableEditorState EditorState;
     public TableFileSelectionView FileSelectionView;
     public TableDataView TableDataView;
+    public TableToolsView TableToolsView;
 
     public ActionManager EditorActionManager = new();
 
@@ -35,6 +36,7 @@ public class TableEditorScreen : EditorScreen
         EditorState = new(this);
         FileSelectionView = new(this);
         TableDataView = new(this);
+        TableToolsView = new(this);
     }
 
     public void DrawEditorMenu()
@@ -107,6 +109,7 @@ public class TableEditorScreen : EditorScreen
 
         FileSelectionView.Display();
         TableDataView.Display();
+        TableToolsView.Display();
 
         ImGui.PopStyleVar();
         ImGui.PopStyleColor(1);

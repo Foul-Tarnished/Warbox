@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudioCore.Editors;
+namespace StudioCore.Editors.TableEditor.Tools;
 
-public static class GuidHelper
+public static class TableGUIDGenerator
 {
     /// <summary>
     /// Use this to generate a new GUID (pass in list of Guids to exclude).

@@ -1,6 +1,7 @@
 ﻿using Assimp;
 using ImGuiNET;
 using StudioCore.Configuration;
+using StudioCore.Editors.TableEditor.Actions;
 using StudioCore.Editors.TextEditor;
 using StudioCore.Interface;
 using StudioCore.Utilities;
@@ -29,10 +30,10 @@ public class GenericTableView
     private string AliasNameKey = "";
     private string RowNameKey = "";
 
-    private string CurrentlySelectedRowEntry = "";
-    private int CurrentlySelectedRowEntryIndex = -1;
+    private string rowName = "";
+    private int rowIndex = -1;
 
-    private bool SelectNextRowEntry = false;
+    private bool selectRow = false;
 
     private bool NoPrimaryKey = false;
 
@@ -54,6 +55,7 @@ public class GenericTableView
         var width = ImGui.GetWindowWidth();
 
         var currentDocument = EditorState.SelectedDocument;
+        var elementList = EditorState.GetCurrentEntries();
 
         ImGui.SetNextItemWidth(width);
         ImGui.InputText($"##{ImGuiName}_KeySearchBar", ref SearchKeyText, 255);
@@ -61,14 +63,7 @@ public class GenericTableView
 
         ImGui.Separator();
 
-        if (ImGui.Button("Add New Entry", new Vector2(width, 24)))
-        {
-
-        }
-
         ImGui.BeginChild($"{ImGuiName}Section");
-
-        var elementList = EditorState.GetCurrentEntries();
 
         for (int i = 0; i < elementList.Count + 1; i++)
         {
@@ -100,22 +95,22 @@ public class GenericTableView
                 }
 
                 if (ImGui.Selectable($"Entry: {key}##{ImGuiName}selectEntry{i}", 
-                    key == CurrentlySelectedRowEntry && CurrentlySelectedRowEntryIndex == i))
+                    key == rowName && rowIndex == i))
                 {
-                    CurrentlySelectedRowEntry = key;
-                    CurrentlySelectedRowEntryIndex = i;
+                    rowName = key;
+                    rowIndex = i;
                 }
 
                 // Arrow Selection
-                if (ImGui.IsItemHovered() && SelectNextRowEntry)
+                if (ImGui.IsItemHovered() && selectRow)
                 {
-                    SelectNextRowEntry = false;
-                    CurrentlySelectedRowEntry = key;
-                    CurrentlySelectedRowEntryIndex = i;
+                    selectRow = false;
+                    rowName = key;
+                    rowIndex = i;
                 }
                 if (ImGui.IsItemFocused() && (InputTracker.GetKey(Veldrid.Key.Up) || InputTracker.GetKey(Veldrid.Key.Down)))
                 {
-                    SelectNextRowEntry = true;
+                    selectRow = true;
                 }
 
                 if (alias != "")
@@ -124,9 +119,22 @@ public class GenericTableView
                 }
 
                 // Context
-                if ($"{key}{i}" == CurrentlySelectedRowEntry)
+                if ($"{key}" == rowName)
                 {
-                    TableContextMenu.DisplayTableRowEntryContextMenu(ImGuiName, currentDocument, entry, i);
+                    if (ImGui.BeginPopupContextItem($"##{ImGuiName}EntryContext{i}"))
+                    {
+                        if(ImGui.Selectable("Duplicate"))
+                        {
+                            DuplicateRow();
+                        }
+
+                        if (ImGui.Selectable("Remove"))
+                        {
+                            RemoveRow();
+                        }
+
+                        ImGui.EndPopup();
+                    }
                 }
             }
         }
@@ -147,9 +155,9 @@ public class GenericTableView
         var currentDocument = EditorState.SelectedDocument;
         var elementList = EditorState.GetCurrentEntries();
 
-        if (CurrentlySelectedRowEntryIndex != -1 && elementList.Count > CurrentlySelectedRowEntryIndex)
+        if (rowIndex != -1 && elementList.Count > rowIndex)
         {
-            var entry = elementList.ElementAt(CurrentlySelectedRowEntryIndex);
+            var entry = elementList.ElementAt(rowIndex);
 
             if (entry != null)
             {
@@ -269,13 +277,58 @@ public class GenericTableView
                 // Inputs Column
                 ImGui.TableSetColumnIndex(1);
 
+                var oldValue = attribute.Value;
                 var tValue = attribute.Value;
+                var isChanged = false;
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.SetNextItemWidth(width * 0.5f);
-                ImGui.InputText($"##{ImGuiName}_input_{attribute.Name}{i}", ref tValue, 255);
 
-                attribute.Value = tValue;
+                // Handling for bool type
+                if(TableMeta.IsBoolAttribute(EditorState,"IsBool",$"{entry.Name}",$"{attribute.Name}"))
+                {
+                    var tBool = false;
+
+                    if (oldValue == "true")
+                        tBool = true;
+
+                    if (ImGui.Checkbox($"##{ImGuiName}_inputBool_{attribute.Name}{i}", ref tBool))
+                    {
+                        isChanged = true;
+                    }
+                    if (ImGui.IsItemDeactivatedAfterEdit() || !ImGui.IsAnyItemActive())
+                    {
+                        if (isChanged)
+                        {
+                            if (tBool)
+                            {
+                                var action = new ChangeAttributeValue(attribute, oldValue, "true");
+                                Screen.EditorActionManager.ExecuteAction(action);
+                            }
+                            else
+                            {
+                                var action = new ChangeAttributeValue(attribute, oldValue, "false");
+                                Screen.EditorActionManager.ExecuteAction(action);
+                            }
+                        }
+                    }
+                }
+                // Handling for string type
+                else
+                {
+                    if (ImGui.InputText($"##{ImGuiName}_input_{attribute.Name}{i}", ref tValue, 255))
+                    {
+                        isChanged = true;
+                    }
+                    if (ImGui.IsItemDeactivatedAfterEdit() || !ImGui.IsAnyItemActive())
+                    {
+                        if (isChanged)
+                        {
+                            var action = new ChangeAttributeValue(attribute, oldValue, tValue);
+                            Screen.EditorActionManager.ExecuteAction(action);
+                        }
+                    }
+                }
 
                 // Action
                 ImGui.TableSetColumnIndex(2);
@@ -290,6 +343,28 @@ public class GenericTableView
 
     public void Shortcuts()
     {
-        TableRowShortcuts.HandleRowShortcuts(EditorState.SelectedDocument, CurrentlySelectedRowEntry);
+        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_DuplicateSelectedEntry))
+        {
+            DuplicateRow();
+        }
+
+        if (InputTracker.GetKeyDown(KeyBindings.Current.CORE_DeleteSelectedEntry))
+        {
+            RemoveRow();
+        }
+    }
+
+    public void DuplicateRow()
+    {
+        var elementList = EditorState.GetCurrentEntries();
+        var action = new AddTableRow(elementList, rowIndex);
+        Screen.EditorActionManager.ExecuteAction(action);
+    }
+
+    public void RemoveRow()
+    {
+        var elementList = EditorState.GetCurrentEntries();
+        var action = new RemoveTableRow(elementList, rowIndex);
+        Screen.EditorActionManager.ExecuteAction(action);
     }
 }

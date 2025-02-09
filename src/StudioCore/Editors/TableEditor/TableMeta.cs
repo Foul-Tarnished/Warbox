@@ -100,6 +100,31 @@ public static class TableMeta
     }
 
     /// <summary>
+    /// Returns true if the attribute is marked as bool
+    /// </summary>
+    public static bool IsBoolAttribute(TableEditorState editorState, string metaField, string nodeName, string attributeName)
+    {
+        var fileName = GetPureXmlName(editorState.SelectedStatus.Name);
+
+        if (Meta.ContainsKey(fileName))
+        {
+            var targetMeta = Meta[fileName];
+
+            List<XElement> elements = targetMeta.Descendants($"{nodeName}-{attributeName}").ToList();
+
+            foreach (var entry in elements)
+            {
+                if (entry.Attribute(metaField) != null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Handler for the action column in all Generic Table Views
     /// </summary>
     public static void DisplayActionColumn(XDocument document, XElement element, XAttribute attribute, int i)
