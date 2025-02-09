@@ -1,8 +1,9 @@
 #-----------------------------------------------
 # Editors
 #-----------------------------------------------
-FEAT: fix the PTF save
+FEAT: PTF save (used to export edits as separate file)
 FEAT: add undo/redo support for property changes
+FEAT: copy selected row into table of same type (e.g. buff.xml -> buff__mymod.xml)
 
 #-----------------------------------------------
 # Text Editor
@@ -22,6 +23,7 @@ GuidAlias="item,Id,UIName"
  
 
 
-        <!-- Combat -->
-		<entry Category="Combat"
-        Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+<!-- Combat -->
+<entry Category="Combat"
+Name="XXX" ImGuiName="XXX" ListKey="XXX" AliasKey="XXX" RowKey="XXX" />
+

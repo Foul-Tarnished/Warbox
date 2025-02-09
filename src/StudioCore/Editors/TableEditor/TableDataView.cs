@@ -17,6 +17,7 @@ public class TableDataView
     private TableEditorState EditorState;
 
     private SortedDictionary<string, GenericTableView> TableViews = new();
+    private SortedDictionary<string, string> XmlNames = new();
 
     public TableDataView(TableEditorScreen screen)
     {
@@ -26,12 +27,19 @@ public class TableDataView
         foreach(var entry in TableDefinition.Definitions)
         {
             var name = entry.Attribute("Name").Value;
-            var imguiName = entry.Attribute("ImGuiName").Value;
-            var listKey = entry.Attribute("ListKey").Value;
-            var aliasKey = entry.Attribute("AliasKey").Value;
-            var rowKey = entry.Attribute("RowKey").Value;
+            var aliasKey = entry.Attribute("AliasNameKey").Value;
+            var rowKey = entry.Attribute("RowNameKey").Value;
 
-            var newView = new GenericTableView(screen, name, imguiName, listKey, aliasKey, rowKey);
+            // This is set for XMLs that don't have a clear primary key,
+            // instead they will be displayed as Entry 1, 2, etc in the selection list
+            var noPrimaryKey = false;
+            var npk = entry.Attribute("NoPrimaryKey");
+            if(npk != null)
+            {
+                noPrimaryKey = true;
+            }
+
+            var newView = new GenericTableView(screen, name, aliasKey, rowKey, noPrimaryKey);
 
             TableViews.Add(name, newView);
         }

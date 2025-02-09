@@ -25,25 +25,28 @@ public class GenericTableView
 
     public string Name = "";
     private string ImGuiName = "";
-    private string NodeListAttributeKey = "";
-    private string NodeListAliasKey = "";
-    private string RowEntryKey = "";
+
+    private string AliasNameKey = "";
+    private string RowNameKey = "";
 
     private string CurrentlySelectedRowEntry = "";
     private int CurrentlySelectedRowEntryIndex = -1;
 
     private bool SelectNextRowEntry = false;
 
-    public GenericTableView(TableEditorScreen screen, string name, string imguiName, string nodeListAttributeKey, string nodeListAliasKey, string rowEntryKey)
+    private bool NoPrimaryKey = false;
+
+    public GenericTableView(TableEditorScreen screen, string name, string aliasNameKey, string rowNameKey, bool noPrimaryKey)
     {
         Screen = screen;
         EditorState = screen.EditorState;
 
         Name = name;
-        ImGuiName = imguiName;
-        NodeListAttributeKey = nodeListAttributeKey;
-        NodeListAliasKey = nodeListAliasKey;
-        RowEntryKey = rowEntryKey;
+        ImGuiName = name;
+        AliasNameKey = aliasNameKey;
+        RowNameKey = rowNameKey;
+
+        NoPrimaryKey = noPrimaryKey;
     }
 
     public void DisplayEntries()
@@ -65,22 +68,29 @@ public class GenericTableView
 
         ImGui.BeginChild($"{ImGuiName}Section");
 
-        List<XElement> elementList = currentDocument.Descendants(NodeListAttributeKey).ToList();
+        var elementList = EditorState.GetCurrentEntries();
 
         for (int i = 0; i < elementList.Count + 1; i++)
         {
             if (i < elementList.Count)
             {
                 var entry = elementList[i];
-                var key = entry.Attribute(RowEntryKey).Value;
+
+                var key = $"{i}";
                 var alias = "";
-                XAttribute aliasAttribute = null;
-                if (NodeListAliasKey != "")
+
+                if (!NoPrimaryKey)
                 {
-                    aliasAttribute = entry.Attribute(NodeListAliasKey);
-                    if (aliasAttribute != null)
+                    key = entry.Attribute(RowNameKey).Value;
+                    
+                    XAttribute aliasAttribute = null;
+                    if (AliasNameKey != "")
                     {
-                        alias = aliasAttribute.Value;
+                        aliasAttribute = entry.Attribute(AliasNameKey);
+                        if (aliasAttribute != null)
+                        {
+                            alias = aliasAttribute.Value;
+                        }
                     }
                 }
 
@@ -89,7 +99,7 @@ public class GenericTableView
                     continue;
                 }
 
-                if (ImGui.Selectable($"{key}##{ImGuiName}selectEntry{i}", 
+                if (ImGui.Selectable($"Entry: {key}##{ImGuiName}selectEntry{i}", 
                     key == CurrentlySelectedRowEntry && CurrentlySelectedRowEntryIndex == i))
                 {
                     CurrentlySelectedRowEntry = key;
@@ -135,12 +145,11 @@ public class GenericTableView
         ImGui.BeginChild($"{ImGuiName}PropertySection");
 
         var currentDocument = EditorState.SelectedDocument;
+        var elementList = EditorState.GetCurrentEntries();
 
-        List<XElement> rowEntries = currentDocument.Descendants(NodeListAttributeKey).ToList();
-
-        if (CurrentlySelectedRowEntryIndex != -1)
+        if (CurrentlySelectedRowEntryIndex != -1 && elementList.Count > CurrentlySelectedRowEntryIndex)
         {
-            var entry = rowEntries.ElementAt(CurrentlySelectedRowEntryIndex);
+            var entry = elementList.ElementAt(CurrentlySelectedRowEntryIndex);
 
             if (entry != null)
             {

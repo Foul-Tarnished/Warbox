@@ -10,6 +10,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace StudioCore.Editors.TableEditor;
@@ -29,6 +30,8 @@ public class TableFileSelectionView
 
     public void Display()
     {
+        SetupCategoryLists();
+
         var width = ImGui.GetWindowWidth();
 
         if (ImGui.Begin("Files##tableFileView"))
@@ -39,10 +42,7 @@ public class TableFileSelectionView
 
             ImGui.BeginChild("tableListSection");
 
-            foreach(var entry in TableDefinition.Categories)
-            {
-                DisplayCategory(entry);
-            }
+            DisplayCategories();
 
             ImGui.EndChild();
 
@@ -50,48 +50,42 @@ public class TableFileSelectionView
         }
     }
 
-    private void DisplayCategory(string category)
+    private void DisplayCategories()
     {
         ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.DefaultOpen;
 
-        if (ImGui.CollapsingHeader(category, flags))
+        foreach (var entry in CategoryLists)
         {
-            for (int i = 0; i < Warbox.DataHandler.Tables.Count; i++)
+            var category = entry.Key;
+            var entries = entry.Value;
+
+            if (ImGui.CollapsingHeader(category, flags))
             {
-                var entry = Warbox.DataHandler.Tables.ElementAt(i);
-                var status = entry.Key;
-                var name = entry.Key.Name;
-
-                var display = false;
-
-                var tableEntry = TableDefinition.Definitions.Where(e => e.Attribute("Name").Value == name).FirstOrDefault();
-
-                if (tableEntry != null && tableEntry.Attribute("Category") != null)
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    if (tableEntry.Attribute("Category").Value == category)
-                    {
-                        display = true;
-                    }
-                }
+                    var selectionRow = entries[i];
+                    var name = selectionRow.Key.Name;
 
-                if (display)
-                {
                     if (TextSearchFilters.FilterFileList(name, SearchText))
                     {
-                        SelectionRow(i, entry, status, name);
+                        SelectionRow(i, selectionRow);
                     }
                 }
             }
         }
     }
 
-    private void SelectionRow(int index, KeyValuePair<DataStatus, XDocument> entry, DataStatus status, string name)
+    private void SelectionRow(int index, KeyValuePair<DataStatus, XDocument> entry)
     {
+        var status = entry.Key;
+        var name = entry.Key.Name;
+
         // Typically the name of the file is one of the headers, so just do this
         var displayName = TableMeta.GetHeaderName(EditorState, "Name", $"{name}", true);
 
         if (ImGui.Selectable($"{displayName}##tableFileEntry{name}{index}", EditorState.SelectedStatus == status))
         {
+            EditorState.InvalidateState();
             EditorState.UpdateSelection(entry);
         }
 
@@ -99,6 +93,7 @@ public class TableFileSelectionView
         if (ImGui.IsItemHovered() && EditorState.SelectNextTable)
         {
             EditorState.SelectNextTable = false;
+            EditorState.InvalidateState();
             EditorState.UpdateSelection(entry);
         }
         if (ImGui.IsItemFocused() && (InputTracker.GetKey(Veldrid.Key.Up) || InputTracker.GetKey(Veldrid.Key.Down)))
@@ -120,4 +115,78 @@ public class TableFileSelectionView
     public void Shortcuts()
     {
     }
+
+    private SortedDictionary<string, List<KeyValuePair<DataStatus, XDocument>>> CategoryLists = new();
+
+    private void SetupCategoryLists()
+    {
+        if (CategoryLists.Count < 1)
+        {
+            // Build categories
+            foreach (var category in TableDefinition.Categories)
+            {
+                for (int i = 0; i < Warbox.DataHandler.Tables.Count; i++)
+                {
+                    var entry = Warbox.DataHandler.Tables.ElementAt(i);
+                    var status = entry.Key;
+                    var name = entry.Key.Name;
+
+                    if (IsPartOfCategory(name, category))
+                    {
+                        if (CategoryLists.ContainsKey(category))
+                        {
+                            CategoryLists[category].Add(entry);
+                        }
+                        else
+                        {
+                            CategoryLists.Add(category, new List<KeyValuePair<DataStatus, XDocument>>()
+                        {
+                            entry
+                        });
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private Dictionary<string, string> CategoryEvaluations = new();
+
+    private bool IsPartOfCategory(string name, string category)
+    {
+        if (name.Contains("__"))
+        {
+            name = name.Split("__")[0];
+        }
+
+        if (CategoryEvaluations.ContainsKey(name))
+        {
+            if (CategoryEvaluations[name] == category)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            var tableEntry = TableDefinition.Definitions.Where(e => e.Attribute("Name").Value == name).FirstOrDefault();
+
+            if (tableEntry != null && tableEntry.Attribute("Category") != null)
+            {
+                if (tableEntry.Attribute("Category").Value == category)
+                {
+                    CategoryEvaluations.Add(name, category);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 }
